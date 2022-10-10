@@ -1,0 +1,75 @@
+[{
+        "id": 1,
+        "name": "Alvyss Company",
+        "brand": "Alvyss",
+        "tag-line": "Automate document generation",
+        "one-liner": "Digital platform to automate document processing",
+        "slogan": "Imagine, Share, Learn, Expand",
+        "industry": "Information Technologies",
+        "logo-url": "https://my.alvyss.com/api/v1/cloudron/avatar?2395601373707481"
+    },
+    {
+        "id": 2,
+        "name": "Katzenfeld Entertainment Corporation",
+        "brand": "Katzenfeld",
+        "tag-line": "Netflix for indies",
+        "one-liner": "Digital platform for distributing indie films",
+        "slogan": "Watch, feel, live",
+        "industry": "Entertainment"
+    },
+    {
+        "id": 3,
+        "name": "Aprendo Company",
+        "brand": "Aprendo",
+        "tag-line": "E-learning for business",
+        "one-liner": "E-learning deployment platform for enterprises",
+        "slogan": "",
+        "industry": ""
+    },
+    {
+        "id": 4,
+        "name": "Sightman Holding Corporation",
+        "brand": "Sightman",
+        "tag-line": "Smart assets",
+        "one-liner": "Data-driven financial services",
+        "slogan": "",
+        "industry": "Finance & management"
+    },
+    {
+        "id": 5,
+        "name": "Alkott Company",
+        "brand": "Alkott",
+        "tag-line": "",
+        "one-liner": "",
+        "slogan": "",
+        "industry": ""
+    },
+    {
+        "id": 6,
+        "name": "Angya Company",
+        "brand": "Angya",
+        "tag-line": "Healing mind games",
+        "one-liner": "Digital platform for applying mindfulness therapy through gaming",
+        "slogan": "Know yourself, grow yourself",
+        "industry": "Mental health"
+    },
+    {
+        "id": 7,
+        "name": "Alsmid Industries",
+        "brand": "Alsmid",
+        "tag-line": "",
+        "one-liner": "",
+        "slogan": "Do what you enjoy",
+        "industry": "Science, Technology and Engineering"
+    },
+    {
+        "id": 8,
+        "name": "Edición Digital",
+        "brand": "Edigital",
+        "tag-line": "",
+        "one-liner": "",
+        "slogan": "Tell your story",
+        "industry": "Digital Media",
+        "logo-url": "https://ifei.com.mx/wp-content/uploads/edigital-logo-url.png"
+    }
+]
