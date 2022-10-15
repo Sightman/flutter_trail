@@ -94,3 +94,4 @@ fonts:
 assets:
   - assets/icons/logo.svg
   - test/businesses.json
+  - test/users.json

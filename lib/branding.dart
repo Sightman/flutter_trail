@@ -1,10 +1,10 @@
 const int colorPrimaryLightBrand = 0xFF00FFFF;
-const int colorSecondaryLightBrand = 0xFF9100FF;
+const int colorSecondaryLightBrand = 0xDD9100FF;
 const int colorBackgroundLightDefault = 0xDDE8CBFF;
 const int colorForegroundLightDefault = 0xFF0000FF;
 const int colorHighlightLight = 0x50A6F8FF;
 const int colorPrimaryDarkBrand = 0xFF00FFFF;
-const int colorSecondaryDarkBrand = 0x770000FF;
-const int colorBackgroundDarkDefault = 0x221326FF;
+const int colorSecondaryDarkBrand = 0xDD0000FF;
+const int colorBackgroundDarkDefault = 0xDD1326FF;
 const int colorForegroundDarkDefault = 0x50A6F8FF;
 const int colorHighlightDark = 0x50A6F8FF;

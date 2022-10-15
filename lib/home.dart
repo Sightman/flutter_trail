@@ -2,9 +2,13 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_trail/branding.dart';
 import 'package:flutter_trail/business.dart';
 import 'package:flutter_trail/preview_card.dart';
+
+import 'avatar.dart';
+import 'avatarList.dart';
+import 'horizontal_card_list.dart';
+import 'persistentBanner.dart';
 
 class Home extends StatelessWidget {
   static List<dynamic>? json;
@@ -12,176 +16,130 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final jsonBusinesses = [
-      {
-        "id": 1,
-        "name": "Alvyss Company",
-        "brand": "Alvyss",
-        "tag-line": "Collaborative CAD tools",
-        "one-liner":
-            "Collaborative CAD application for architects and engineers",
-        "industry": "Information Technologies",
-        "slogan": "Imagine, share, learn, expand",
-        "logo-url":
-            "https://my.alvyss.com/api/v1/cloudron/avatar?2395601373707481",
-        "social-media": [
+    getJSON('test/businesses.json');
+    final jsonBusinesses = json ??
+        [
           {
-            "linkedin": "alvyss",
-            "instagram": "alvyss.it",
-            "facebook": "alvyss.it",
-            "vkontake": "alvyss"
-          }
-        ]
-      },
-      {
-        "id": 2,
-        "name": "MSA Solutions, S. A. de C. V.",
-        "brand": "CEDi",
-        "tag-line": "",
-        "one-liner": "",
-        "industry": "Information Technologies",
-        "slogan": "",
-        "logo-url": "",
-        "social-media": [
-          {"linkedin": "", "instagram": "", "facebook": "", "vkontake": ""}
-        ]
-      },
-      {
-        "id": 3,
-        "name": "Edición Digital",
-        "brand": "EDigital",
-        "tag-line": "",
-        "one-liner": "",
-        "industry": "Video Production",
-        "slogan": "Contamos tu historia",
-        "logo-url":
-            "https://ifei.com.mx/wp-content/uploads/edigital-logo-url.png",
-        "social-media": [
+            "id": 1,
+            "name": "Alvyss Company",
+            "brand": "Alvyss",
+            "tag-line": "Collaborative CAD tools",
+            "one-liner":
+                "Collaborative CAD application for architects and engineers",
+            "industry": "Information Technologies",
+            "slogan": "Imagine, share, learn, expand",
+            "logo-url":
+                "https://my.alvyss.com/api/v1/cloudron/avatar?2395601373707481",
+            "social-media": [
+              {
+                "linkedin": "alvyss",
+                "instagram": "alvyss.it",
+                "facebook": "alvyss.it",
+                "twitter": "AlvyssIoT",
+                "vkontake": "alvyss"
+              }
+            ]
+          },
           {
-            "linkedin": "",
-            "instagram": "edigital",
-            "facebook": "",
-            "vkontake": ""
+            "id": 2,
+            "name": "Alsmid Company",
+            "brand": "Alsmid",
+            "tag-line": "",
+            "one-liner": "",
+            "industry": "Robotics",
+            "slogan": "",
+            "logo-url": "",
+            "social-media": [
+              {
+                "linkedin": "alsmid",
+                "instagram": "alsmid.iot",
+                "facebook": "alsmid.iot",
+                "twitter": "AlsmidIoT",
+                "vkontake": ""
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "name": "Katzenfeld Corporation",
+            "brand": "Katzenfeld",
+            "tag-line": "",
+            "one-liner": "",
+            "industry": "Film making",
+            "slogan": "Watch, feel, lieve",
+            "logo-url":
+                "https://ifei.com.mx/wp-content/uploads/edigital-logo.png",
+            "social-media": [
+              {
+                "linkedin": "",
+                "instagram": "katzenfeld.corp",
+                "facebook": "katzenfeld.corp",
+                "vkontake": ""
+              }
+            ]
           }
-        ]
-      }
-    ];
-    //getJSON('test/businesses.json');
-    var lstCardPartners = setBusinesses(jsonBusinesses)
+        ];
+    var lstCardPartners = jsonBusinesses
         .map((business) => PreviewCard(
-              key: Key(business.id.toString()),
-              strCardImage: business.logoURL,
-              strOverlayTitle: business.brand,
+              key: Key(business['id'].toString()),
+              strCardImage: business['logo-url'] != null
+                  ? business['logo-url'].toString()
+                  : 'https://ifei.com.mx/wp-content/uploads/Comunidad-Empresarial_icon.png',
+              strOverlayTitle: business['brand'].toString(),
               iconOverlayTopRight: Icons.business,
               boolOverlayTopRightIcon: true,
-              strBottomBarTitle: business.slogan,
+              strBottomBarTitle: business['slogan'].toString(),
             ))
         .toList();
-    final contPartnersMoreLink = Container(
-      key: const Key('partners_more_link'),
-      margin: const EdgeInsets.only(top: 10.0, left: 460.0, right: 10.0),
-      child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: const [
-        Text('Todos'),
-        Icon(
-          Icons.more_horiz_rounded,
-          color: Color(colorForegroundDarkDefault),
-          size: 40,
-        )
-      ]),
-    );
-    final contMembersMoreLink = Container(
-      key: const Key('partners_more_link'),
-      margin: const EdgeInsets.only(top: 10.0, left: 427.0, right: 10.0),
-      child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: const [
-        Text('Todos'),
-        Icon(
-          Icons.more_horiz_rounded,
-          color: Color(colorForegroundDarkDefault),
-          size: 40,
-        )
-      ]),
-    );
-    var rowPartnersMenu =
-        Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Container(
-        key: const Key('container-partners'),
-        margin: const EdgeInsets.only(bottom: 10),
-        padding: const EdgeInsets.only(top: 0, bottom: 20),
-        alignment:
-            AlignmentGeometry.lerp(Alignment.topLeft, Alignment.topRight, 1),
-        //padding: EdgeInsetsGeometry.infinity,
-        //constraints: const BoxConstraints(maxHeight: 200),
-        //height: 200,
-        color: Colors.blue.shade500,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              const Text(
-                'Partners',
-                textAlign: TextAlign.left,
-                style: TextStyle(
-                    color: Colors.black,
-                    height: 4,
-                    leadingDistribution: TextLeadingDistribution.even,
-                    fontSize: 25,
-                    fontFamily: 'M PLUS Round 1c',
-                    fontWeight: FontWeight.w700,
-                    fontStyle: FontStyle.normal,
-                    package: 'flutter_trail'),
-              ),
-              contPartnersMoreLink
-            ]),
-            Row(children: lstCardPartners.cast())
-          ],
-        ),
+    //getJSON('test/users.json');
+    final arrMoments = [
+      {'id': 1, 'photo-url': '', 'name': 'noe.alvyss'},
+      {'id': 2, 'photo-url': '', 'name': 'katzen.oli'}
+    ];
+    var contMomentsMenu = Container(
+      color: Colors.blueGrey,
+      margin: const EdgeInsets.only(top: 5, bottom: 5),
+      child: AvatarList(
+        children: [
+              const Avatar(
+                name: 'Crear',
+                foreground: Colors.black,
+              )
+            ] +
+            arrMoments
+                .map((moment) => Avatar(
+                      photoURL: moment['photo-url'] != null
+                          ? moment['photo-url'].toString()
+                          : 'https://ifei.com.mx/wp-content/uploads/Comunidad-Empresarial_icon.png',
+                      name: moment['name'].toString(),
+                      background: Colors.blueGrey.shade900,
+                    ))
+                .toList()
+                .cast(),
       ),
-    ]);
-    var rowMembersMenu = Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          key: const Key('container-members'),
-          margin: const EdgeInsets.only(bottom: 10),
-          alignment:
-              AlignmentGeometry.lerp(Alignment.topLeft, Alignment.topRight, 1),
-          //constraints: const BoxConstraints(maxHeight: 200),
-          //height: 200,
-          color: Colors.blueGrey.shade300,
-          child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Container(
-                margin: const EdgeInsets.only(left: 20.0, right: 10.0),
-                child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        'Community',
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                            color: Colors.black87,
-                            height: 4,
-                            leadingDistribution: TextLeadingDistribution.even,
-                            fontSize: 25,
-                            fontFamily: 'M PLUS Round 1c',
-                            fontWeight: FontWeight.w700,
-                            fontStyle: FontStyle.normal,
-                            package: 'flutter_trail'),
-                      ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [contMembersMoreLink],
-                      )
-                    ]))
-          ]),
-        )
-      ],
     );
-    var colMainMenu = Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [rowPartnersMenu, rowMembersMenu],
+    var contPartnersMenu = Container(
+      margin: const EdgeInsets.only(top: 5.0, bottom: 5.0),
+      child: HorizontalCardList(
+        title: 'Partners',
+        topRightButtonLabel: 'Todos',
+        background: Colors.blue.shade500,
+        children: lstCardPartners.cast(),
+      ),
+    );
+    var contMembersMenu = Container(
+      margin: const EdgeInsets.only(top: 5.0, bottom: 5.0),
+      child: HorizontalCardList(
+        title: 'Comunidad',
+        topRightButtonLabel: 'Todos',
+        background: Colors.blue.shade300,
+      ),
+    );
+    var colMainMenu = ListView(
+      children: [contMomentsMenu, contPartnersMenu, contMembersMenu],
     );
     //throw UnimplementedError();
-    return colMainMenu;
+    return Stack(children: [colMainMenu, const PersistentBanner()]);
   }
 
   Future<void> getJSON(String url) async {

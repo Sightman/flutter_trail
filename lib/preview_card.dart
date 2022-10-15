@@ -63,7 +63,7 @@ class PreviewCard extends Card {
         style: const TextStyle(
             fontSize: 17,
             fontFamily: 'M PLUS Round 1c',
-            color: Color(colorBackgroundDarkDefault),
+            color: Color(colorBackgroundLightDefault),
             backgroundColor: Colors.transparent),
       ),
     );
@@ -89,7 +89,7 @@ class PreviewCard extends Card {
         style: const TextStyle(
             fontSize: 12,
             fontFamily: 'M PLUS Round 1c',
-            color: Color(colorForegroundDarkDefault)),
+            color: Color(colorForegroundLightDefault)),
       ),
     );
     var contBottomBar = Container(
@@ -101,9 +101,10 @@ class PreviewCard extends Card {
               bottomLeft: Radius.circular(5), bottomRight: Radius.circular(5))),
       child: Column(children: [contBottomBarTitle]),
     );
-    var cardPreview = Card(
+    var cardPreview = Container(
         margin: const EdgeInsets.all(5),
         color: Colors.transparent,
+        height: 230,
         child: Column(
           key: const Key('card-preview'),
           crossAxisAlignment: CrossAxisAlignment.start,
