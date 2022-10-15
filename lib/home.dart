@@ -5,10 +5,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter_trail/business.dart';
 import 'package:flutter_trail/preview_card.dart';
 
-import 'avatar.dart';
-import 'avatarList.dart';
-import 'horizontal_card_list.dart';
-import 'persistentBanner.dart';
+import 'package:flutter_trail/avatar.dart';
+import 'package:flutter_trail/avatar_list.dart';
+import 'package:flutter_trail/horizontal_card_list.dart';
+import 'package:flutter_trail/persistent_banner.dart';
+import 'package:flutter_trail/review.dart';
+import 'package:flutter_trail/review_list.dart';
 
 class Home extends StatelessWidget {
   static List<dynamic>? json;
@@ -135,8 +137,39 @@ class Home extends StatelessWidget {
         background: Colors.blue.shade300,
       ),
     );
+    var arrReviews = [
+      {
+        "fullname": "Noé Muñoz",
+        "adscription": "CEO at Alvyss",
+        "comment": "So efficient",
+      },
+      {
+        "fullname": "Jane Doe",
+        "adscription": "CIO at Alvyss",
+        "comment": "Usefull"
+      }
+    ];
+    var contReviewList = Container(
+        margin: const EdgeInsets.all(5.0),
+        height: 400.0,
+        child: ReviewList(
+            children: arrReviews
+                .map((e) => Review(
+                      avatar: Avatar(
+                        name: e['fullname'].toString(),
+                        background: Colors.transparent,
+                      ),
+                      title: e['adscription'],
+                      comment: e['comment'].toString(),
+                    ))
+                .toList()));
     var colMainMenu = ListView(
-      children: [contMomentsMenu, contPartnersMenu, contMembersMenu],
+      children: [
+        contMomentsMenu,
+        contPartnersMenu,
+        contMembersMenu,
+        contReviewList
+      ],
     );
     //throw UnimplementedError();
     return Stack(children: [colMainMenu, const PersistentBanner()]);

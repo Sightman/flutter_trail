@@ -7,7 +7,6 @@ class AvatarList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     var contTitle = Container(
       margin: const EdgeInsets.only(top: 5.0, bottom: 5.0),
       child: Text(
