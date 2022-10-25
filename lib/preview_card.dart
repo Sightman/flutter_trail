@@ -62,7 +62,7 @@ class PreviewCard extends Card {
         textAlign: TextAlign.left,
         style: const TextStyle(
             fontSize: 17,
-            fontFamily: 'M PLUS Round 1c',
+            fontFamily: 'M PLUS Round',
             color: Color(colorBackgroundLightDefault),
             backgroundColor: Colors.transparent),
       ),
@@ -88,7 +88,7 @@ class PreviewCard extends Card {
         softWrap: true,
         style: const TextStyle(
             fontSize: 12,
-            fontFamily: 'M PLUS Round 1c',
+            fontFamily: 'M PLUS Round',
             color: Color(colorForegroundLightDefault)),
       ),
     );
@@ -104,13 +104,12 @@ class PreviewCard extends Card {
     var cardPreview = Container(
         margin: const EdgeInsets.all(5),
         color: Colors.transparent,
-        height: 230,
+        constraints: const BoxConstraints(minHeight: 160, maxHeight: 230),
         child: Column(
           key: const Key('card-preview'),
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [stackOverlay, contBottomBar],
         ));
-    //throw UnimplementedError();
     return cardPreview;
   }
 }

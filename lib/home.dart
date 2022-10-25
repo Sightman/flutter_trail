@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_trail/branding.dart';
 import 'package:flutter_trail/business.dart';
 import 'package:flutter_trail/preview_card.dart';
 
@@ -19,7 +20,7 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     getJSON('test/businesses.json');
-    final jsonBusinesses = json ??
+    var jsonBusinesses = json ??
         [
           {
             "id": 1,
@@ -50,7 +51,7 @@ class Home extends StatelessWidget {
             "one-liner": "",
             "industry": "Robotics",
             "slogan": "",
-            "logo-url": "",
+            "logo-url": null,
             "social-media": [
               {
                 "linkedin": "alsmid",
@@ -86,7 +87,7 @@ class Home extends StatelessWidget {
               key: Key(business['id'].toString()),
               strCardImage: business['logo-url'] != null
                   ? business['logo-url'].toString()
-                  : 'https://ifei.com.mx/wp-content/uploads/Comunidad-Empresarial_icon.png',
+                  : 'https://my.alvyss.com/api/v1/cloudron/avatar?2395601373707481',
               strOverlayTitle: business['brand'].toString(),
               iconOverlayTopRight: Icons.business,
               boolOverlayTopRightIcon: true,
@@ -125,6 +126,8 @@ class Home extends StatelessWidget {
       child: HorizontalCardList(
         title: 'Partners',
         topRightButtonLabel: 'Todos',
+        topRightButtonBackground: const Color(colorHighlightDark),
+        topRightButtonIcon: Icons.more_horiz_rounded,
         background: Colors.blue.shade500,
         children: lstCardPartners.cast(),
       ),
@@ -134,6 +137,8 @@ class Home extends StatelessWidget {
       child: HorizontalCardList(
         title: 'Comunidad',
         topRightButtonLabel: 'Todos',
+        topRightButtonBackground: const Color(colorHighlightDark),
+        topRightButtonIcon: Icons.more_horiz_rounded,
         background: Colors.blue.shade300,
       ),
     );
@@ -172,12 +177,57 @@ class Home extends StatelessWidget {
       ],
     );
     //throw UnimplementedError();
-    return Stack(children: [colMainMenu, const PersistentBanner()]);
+    return Stack(children: [
+      colMainMenu,
+      PersistentBanner(
+        title: 'My Flutter learning path',
+        leading: Image.network(imgLogoBrand),
+        flexibleSpace: AvatarList(
+          title: '',
+          background: const Color(colorForegroundDarkDefault),
+          children: [
+                const Avatar(
+                  name: 'Crear',
+                  background: Color(0x50ffffff),
+                  foreground: Colors.black,
+                )
+              ] +
+              arrMoments
+                  .map((moment) => Avatar(
+                        photoURL: moment['photo-url'] != null
+                            ? moment['photo-url'].toString()
+                            : 'https://ifei.com.mx/wp-content/uploads/Comunidad-Empresarial_icon.png',
+                        name: moment['name'].toString(),
+                        background: Colors.blueGrey.shade900,
+                      ))
+                  .toList()
+                  .cast(),
+        ),
+        actions: const [
+          Icon(
+            Icons.notifications_rounded,
+            color: Color(colorPrimaryDarkBrand),
+            size: 40,
+          ),
+          Icon(
+            Icons.account_circle_rounded,
+            color: Color(colorPrimaryDarkBrand),
+            size: 40,
+          )
+        ],
+      )
+    ]);
   }
 
   Future<void> getJSON(String url) async {
-    final String payload = await rootBundle.loadString(url);
-    json = jsonDecode(payload) as List<dynamic>;
+    try {
+      final String payload = await rootBundle.loadString(url);
+      json = jsonDecode(payload) as List<dynamic>;
+    } catch (e) {
+      Dialog(
+        child: Text(e.toString()),
+      );
+    }
     //return json;
   }
 

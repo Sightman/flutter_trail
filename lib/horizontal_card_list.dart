@@ -4,31 +4,34 @@ import 'package:flutter_trail/branding.dart';
 class HorizontalCardList extends StatelessWidget {
   final String? title;
   final String? topRightButtonLabel;
-  final int? topRightButtonBackground;
+  final Color? topRightButtonBackground;
+  final IconData? topRightButtonIcon;
   final Color? background;
-  final List<Widget>? children;
+  final List<Widget> children;
   const HorizontalCardList(
       {Key? key,
-      this.title,
-      this.topRightButtonLabel,
-      this.topRightButtonBackground,
+      this.title = 'Horizontal Card List',
+      this.topRightButtonLabel = 'All',
+      this.topRightButtonBackground = Colors.transparent,
+      this.topRightButtonIcon,
       this.background,
-      this.children})
+      this.children = const <Widget>[]})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     var contTitle = Container(
-        margin: const EdgeInsets.only(top: 5.0, bottom: 5.0),
+        margin: EdgeInsets.symmetric(
+            vertical: title == null || title == '' ? 0.0 : 5.0),
         child: Text(
-          title ?? 'Horizontal List',
+          title ?? 'Horizontal Card List',
           textAlign: TextAlign.left,
           style: const TextStyle(
               color: Colors.black,
               height: 1,
               leadingDistribution: TextLeadingDistribution.even,
               fontSize: 25,
-              fontFamily: 'M PLUS Rounded 1C',
+              fontFamily: 'M PLUS Rounded',
               fontWeight: FontWeight.w700,
               fontStyle: FontStyle.normal,
               package: 'bizmash'),
@@ -36,17 +39,17 @@ class HorizontalCardList extends StatelessWidget {
     var contTopRightButton = Container(
       key: const Key('list-top-right-button'),
       alignment: Alignment.topRight,
-      margin: const EdgeInsets.only(top: 10.0, right: 10.0),
+      margin: EdgeInsets.symmetric(
+          vertical: topRightButtonIcon == null ? 0.0 : 10.0),
       child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(topRightButtonLabel ?? 'More'),
+            Text(topRightButtonLabel ?? 'All'),
             Icon(
-              Icons.more_horiz_rounded,
-              color:
-                  Color(topRightButtonBackground ?? colorForegroundDarkDefault),
-              size: 40,
+              topRightButtonIcon,
+              color: topRightButtonBackground,
+              size: topRightButtonIcon == null ? 0 : 40,
             )
           ]),
     );
@@ -54,7 +57,7 @@ class HorizontalCardList extends StatelessWidget {
       children: [contTitle, contTopRightButton],
     );
     var contHorizontalList = Container(
-      padding: const EdgeInsets.only(top: 0, bottom: 20),
+      padding: const EdgeInsets.symmetric(vertical: 5),
       alignment:
           AlignmentGeometry.lerp(Alignment.topLeft, Alignment.topRight, 1),
       color: background ?? const Color(colorBackgroundDarkDefault),
@@ -63,16 +66,16 @@ class HorizontalCardList extends StatelessWidget {
         children: [
           contHeading,
           Container(
+              height: children.isEmpty ? 0.0 : 210,
               constraints: const BoxConstraints(
                   minHeight: 210, minWidth: 160, maxHeight: 230),
               child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: children ?? <Widget>[]))
+                  scrollDirection: Axis.horizontal, children: children))
         ],
       ),
     );
     var contSlideForward = Container(
-      margin: const EdgeInsets.only(top: 120, right: 5),
+      margin: const EdgeInsets.only(top: 105, right: 5),
       alignment: Alignment.centerRight,
       decoration:
           const BoxDecoration(color: Color(0x77FFFFFF), shape: BoxShape.circle),
@@ -83,7 +86,7 @@ class HorizontalCardList extends StatelessWidget {
       ),
     );
     var contSlideBackward = Container(
-      margin: const EdgeInsets.only(top: 120, left: 5),
+      margin: const EdgeInsets.only(top: 105, left: 5),
       alignment: Alignment.centerRight,
       decoration:
           const BoxDecoration(color: Color(0x77FFFFFF), shape: BoxShape.circle),
@@ -96,11 +99,8 @@ class HorizontalCardList extends StatelessWidget {
     return Stack(children: [
       contHorizontalList,
       Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [contSlideBackward]),
-      Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [contSlideForward])
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [contSlideBackward, contSlideForward])
     ]);
   }
 /*

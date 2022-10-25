@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_trail/branding.dart';
 import 'package:flutter_trail/home.dart';
+import 'package:flutter_trail/welcome.dart';
 
 void main() {
   runApp(const MyApp());
@@ -85,6 +86,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
+      /*
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
@@ -113,7 +115,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
         titleSpacing: 50,
         //flexibleSpace: Image.network("https://comunidad-empresarial.ediciondigital.mx/wp-content/uploads/slider6/presentacion5c16-9-03.png")
-      ),
+      ),*/
       body: const Home(),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,

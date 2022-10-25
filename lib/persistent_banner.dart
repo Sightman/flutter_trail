@@ -4,13 +4,38 @@ import 'package:flutter_trail/branding.dart';
 class PersistentBanner extends StatelessWidget {
   final String? title;
   final Widget? leading;
-  const PersistentBanner({Key? key, this.title, this.leading})
+  final List<Widget> actions;
+  final Widget? flexibleSpace;
+  const PersistentBanner(
+      {Key? key,
+      this.title = 'Persistent Banner',
+      this.leading,
+      this.actions = const <Widget>[],
+      this.flexibleSpace})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    var contLeading = Container(
+      margin: const EdgeInsets.only(top: 5, left: 5),
+      height: leading == null ? 0.0 : 40.0,
+      width: leading == null ? 0.0 : 40.0,
+      constraints: const BoxConstraints(
+          minHeight: 0, minWidth: 0, maxHeight: 50, maxWidth: 50),
+      color: Colors.transparent,
+      child: leading,
+    );
+    var contFlexibleSpace = Container(
+      margin: const EdgeInsets.only(top: 20),
+      child: flexibleSpace,
+    );
+    var contActions = Container(
+      margin: const EdgeInsets.only(top: 5, right: 5),
+      constraints: const BoxConstraints(minHeight: 0, maxHeight: 50),
+      child: Row(mainAxisAlignment: MainAxisAlignment.end, children: actions),
+    );
     return Container(
-      height: 250.0,
+      height: 200.0,
       decoration: const BoxDecoration(
           gradient: LinearGradient(
               colors: [
@@ -22,11 +47,14 @@ class PersistentBanner extends StatelessWidget {
               stops: [0.0, 0.6],
               tileMode: TileMode.clamp)),
       child: Column(children: [
-        Row(children: [
+        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          contLeading,
           Text(title ?? 'Persistent Banner',
-              style: const TextStyle(
-                  fontSize: 25, fontFamily: 'M PLUS Rounded 1C'))
-        ])
+              style:
+                  const TextStyle(fontSize: 25, fontFamily: 'M PLUS Rounded')),
+          contActions
+        ]),
+        contFlexibleSpace
       ]),
     );
   }
