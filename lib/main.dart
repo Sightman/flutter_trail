@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_trail/bottom_nav_bar.dart';
 import 'package:flutter_trail/branding.dart';
 import 'package:flutter_trail/home.dart';
-import 'package:flutter_trail/welcome.dart';
 
 void main() {
   runApp(const MyApp());
@@ -35,12 +35,20 @@ class MyApp extends StatelessWidget {
             surface: Colors.blue,
             onBackground: Color(colorForegroundDarkDefault),
             onPrimary: Colors.white,
-            onSecondary: Colors.black,
+            onSecondary: Colors.white70,
             onError: Colors.redAccent,
             onSurface: Colors.blue),
-        secondaryHeaderColor: Colors.orangeAccent,
+        bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+            backgroundColor: Colors.white24,
+            selectedIconTheme: IconThemeData(color: Color(colorHighlightDark)),
+            unselectedIconTheme:
+                IconThemeData(color: Color(colorPrimaryDarkBrand)),
+            selectedItemColor: Color(colorHighlightDark),
+            unselectedItemColor: Color(colorPrimaryDarkBrand),
+            type: BottomNavigationBarType.fixed),
+        secondaryHeaderColor: Colors.transparent,
       ),
-      home: const MyHomePage(title: 'The Flutter learning path'),
+      home: const MyHomePage(title: 'My Flutter learning path'),
     );
   }
 }
@@ -117,6 +125,7 @@ class _MyHomePageState extends State<MyHomePage> {
         //flexibleSpace: Image.network("https://comunidad-empresarial.ediciondigital.mx/wp-content/uploads/slider6/presentacion5c16-9-03.png")
       ),*/
       body: const Home(),
+      bottomNavigationBar: const BottomNavBar(),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',

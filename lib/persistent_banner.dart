@@ -26,7 +26,7 @@ class PersistentBanner extends StatelessWidget {
       child: leading,
     );
     var contFlexibleSpace = Container(
-      margin: const EdgeInsets.only(top: 20),
+      margin: const EdgeInsets.only(top: 5),
       child: flexibleSpace,
     );
     var contActions = Container(
@@ -35,6 +35,7 @@ class PersistentBanner extends StatelessWidget {
       child: Row(mainAxisAlignment: MainAxisAlignment.end, children: actions),
     );
     return Container(
+      alignment: const Alignment(-0.9, -0.6),
       height: 200.0,
       decoration: const BoxDecoration(
           gradient: LinearGradient(
@@ -46,7 +47,7 @@ class PersistentBanner extends StatelessWidget {
               end: FractionalOffset(1.0, 0.6),
               stops: [0.0, 0.6],
               tileMode: TileMode.clamp)),
-      child: Column(children: [
+      child: Column(mainAxisAlignment: MainAxisAlignment.end, children: [
         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           contLeading,
           Text(title ?? 'Persistent Banner',

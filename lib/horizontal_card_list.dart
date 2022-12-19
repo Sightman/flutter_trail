@@ -2,17 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_trail/branding.dart';
 
 class HorizontalCardList extends StatelessWidget {
+  final double? height;
   final String? title;
   final String? topRightButtonLabel;
   final Color? topRightButtonBackground;
   final IconData? topRightButtonIcon;
+  final IconData? backwardButtonIcon;
+  final IconData? forwardButtonIcon;
   final Color? background;
   final List<Widget> children;
   const HorizontalCardList(
       {Key? key,
+      this.height,
       this.title = 'Horizontal Card List',
       this.topRightButtonLabel = 'All',
       this.topRightButtonBackground = Colors.transparent,
+      this.backwardButtonIcon,
+      this.forwardButtonIcon,
       this.topRightButtonIcon,
       this.background,
       this.children = const <Widget>[]})
@@ -66,9 +72,9 @@ class HorizontalCardList extends StatelessWidget {
         children: [
           contHeading,
           Container(
-              height: children.isEmpty ? 0.0 : 210,
-              constraints: const BoxConstraints(
-                  minHeight: 210, minWidth: 160, maxHeight: 230),
+              height: children.isEmpty ? 0.0 : height ?? 210,
+              constraints:
+                  BoxConstraints(minWidth: 160, maxHeight: height ?? 230),
               child: ListView(
                   scrollDirection: Axis.horizontal, children: children))
         ],
@@ -77,10 +83,13 @@ class HorizontalCardList extends StatelessWidget {
     var contSlideForward = Container(
       margin: const EdgeInsets.only(top: 105, right: 5),
       alignment: Alignment.centerRight,
-      decoration:
-          const BoxDecoration(color: Color(0x77FFFFFF), shape: BoxShape.circle),
-      child: const Icon(
-        Icons.arrow_forward_rounded,
+      decoration: BoxDecoration(
+          color: forwardButtonIcon == null
+              ? Colors.transparent
+              : const Color(0x77FFFFFF),
+          shape: BoxShape.circle),
+      child: Icon(
+        forwardButtonIcon,
         color: Colors.blue,
         size: 40,
       ),
@@ -88,10 +97,13 @@ class HorizontalCardList extends StatelessWidget {
     var contSlideBackward = Container(
       margin: const EdgeInsets.only(top: 105, left: 5),
       alignment: Alignment.centerRight,
-      decoration:
-          const BoxDecoration(color: Color(0x77FFFFFF), shape: BoxShape.circle),
-      child: const Icon(
-        Icons.arrow_back_rounded,
+      decoration: BoxDecoration(
+          color: backwardButtonIcon == null
+              ? Colors.transparent
+              : const Color(0x77FFFFFF),
+          shape: BoxShape.circle),
+      child: Icon(
+        backwardButtonIcon,
         color: Colors.blue,
         size: 40,
       ),
@@ -100,7 +112,8 @@ class HorizontalCardList extends StatelessWidget {
       contHorizontalList,
       Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [contSlideBackward, contSlideForward])
+          children:
+              children.isEmpty ? [] : [contSlideBackward, contSlideForward])
     ]);
   }
 /*

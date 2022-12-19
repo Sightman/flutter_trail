@@ -110,6 +110,12 @@ class PreviewCard extends Card {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [stackOverlay, contBottomBar],
         ));
-    return cardPreview;
+    return InkWell(
+        onTap: () {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              backgroundColor: const Color(colorBackgroundLightDefault),
+              content: Text(strOverlayTitle ?? "My Flutter trail")));
+        },
+        child: cardPreview);
   }
 }

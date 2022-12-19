@@ -14,8 +14,6 @@ class BottomNavBar extends StatelessWidget {
         BottomNavigationBarItem(icon: Icon(Icons.people), label: "Contacts"),
         BottomNavigationBarItem(icon: Icon(Icons.more_horiz), label: "More")
       ],
-      selectedItemColor: Colors.red,
-      unselectedItemColor: Colors.cyan,
       showUnselectedLabels: true,
     );
     //throw UnimplementedError();
