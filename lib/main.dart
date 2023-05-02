@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_trail/bottom_nav_bar.dart';
 import 'package:flutter_trail/branding.dart';
+import 'package:flutter_trail/flutter_trail.dart';
 import 'package:flutter_trail/home.dart';
 
 void main() {
@@ -48,7 +49,7 @@ class MyApp extends StatelessWidget {
             type: BottomNavigationBarType.fixed),
         secondaryHeaderColor: Colors.transparent,
       ),
-      home: const MyHomePage(title: 'My Flutter learning path'),
+      home: FlutterTrail(title: 'My Flutter learning path'),
     );
   }
 }

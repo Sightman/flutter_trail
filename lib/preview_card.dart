@@ -2,15 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_trail/branding.dart';
 
 class PreviewCard extends StatefulWidget {
-  final String? strCardImage;
-  final String? strOverlayTitle;
-  final IconData? iconOverlayTopLeft;
-  final IconData? iconOverlayTopRight;
-  final bool? boolOverlayTopRightIcon;
-  final bool? boolOverlayBackgroundSolid;
-  final int intOverlayBackgroundColor;
-  final String? strBottomBarTitle;
-  final int intBottomBarColor;
   const PreviewCard(
       {Key? key,
       this.strOverlayTitle,
@@ -19,52 +10,41 @@ class PreviewCard extends StatefulWidget {
       this.iconOverlayTopRight,
       this.boolOverlayTopRightIcon = false,
       this.boolOverlayBackgroundSolid = false,
-      this.intOverlayBackgroundColor = 0xFF424242,
+      this.colorOverlayBackgroundColor = const Color(0xFF424242),
       this.strBottomBarTitle,
       this.intBottomBarColor = 0xffffffff})
       : super(key: key);
-
-  @override
-  State<PreviewCard> createState() {
-    // TODO: implement createState
-    return _PreviewCardState(
-        key: key,
-        strCardImage: strCardImage,
-        strOverlayTitle: strOverlayTitle,
-        iconOverlayTopLeft: iconOverlayTopLeft,
-        iconOverlayTopRight: iconOverlayTopRight,
-        boolOverlayTopRightIcon: boolOverlayTopRightIcon,
-        boolOverlayBackgroundSolid: boolOverlayBackgroundSolid,
-        intOverlayBackgroundColor: intBottomBarColor,
-        strBottomBarTitle: strBottomBarTitle,
-        intBottomBarColor: intBottomBarColor);
-  }
-}
-
-class _PreviewCardState extends State<PreviewCard> {
-  final Key? key;
   final String? strCardImage;
   final String? strOverlayTitle;
   final IconData? iconOverlayTopLeft;
   final IconData? iconOverlayTopRight;
   final bool? boolOverlayTopRightIcon;
   final bool? boolOverlayBackgroundSolid;
-  final int intOverlayBackgroundColor;
+  final Color colorOverlayBackgroundColor;
   final String? strBottomBarTitle;
-  final int intBottomBarColor;
-  _PreviewCardState(
-      {this.key,
-      this.strOverlayTitle,
-      this.strCardImage,
-      this.iconOverlayTopLeft,
-      this.iconOverlayTopRight,
-      this.boolOverlayTopRightIcon = false,
-      this.boolOverlayBackgroundSolid = false,
-      this.intOverlayBackgroundColor = 0xFF424242,
-      this.strBottomBarTitle,
-      this.intBottomBarColor = 0xffffffff});
+  final int? intBottomBarColor;
 
-  void openBusiness() {
+  @override
+  State<PreviewCard> createState() {
+    // TODO: implement createState
+    return _PreviewCardState();
+  }
+}
+
+class _PreviewCardState extends State<PreviewCard> {
+  _PreviewCardState();
+  Key? key;
+  final String? strCardImage = null;
+  final String? strOverlayTitle = "Preview card";
+  final IconData? iconOverlayTopLeft = Icons.info;
+  final IconData? iconOverlayTopRight = Icons.business;
+  final bool? boolOverlayTopRightIcon = false;
+  final bool? boolOverlayBackgroundSolid = true;
+  final Color colorOverlayBackgroundColor = const Color(0xFF424242);
+  final String? strBottomBarTitle = 'Bottom bar';
+  final int? intBottomBarColor = 0xffffffff;
+
+  void openItem() {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         backgroundColor: const Color(colorBackgroundLightDefault),
         content: Text(strOverlayTitle ?? "My Flutter trail")));
@@ -81,7 +61,7 @@ class _PreviewCardState extends State<PreviewCard> {
       foregroundDecoration: BoxDecoration(
           shape: BoxShape.rectangle,
           gradient: LinearGradient(
-              colors: [Colors.transparent, Color(intOverlayBackgroundColor)],
+              colors: [Colors.transparent, colorOverlayBackgroundColor],
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter)),
       decoration: BoxDecoration(
@@ -142,7 +122,7 @@ class _PreviewCardState extends State<PreviewCard> {
       alignment: Alignment.topLeft,
       decoration: BoxDecoration(
           shape: BoxShape.rectangle,
-          color: Color(intBottomBarColor),
+          color: Color(intBottomBarColor ?? colorBackgroundLightDefault),
           borderRadius: const BorderRadius.only(
               bottomLeft: Radius.circular(5), bottomRight: Radius.circular(5))),
       child: Column(children: [contBottomBarTitle]),
@@ -156,6 +136,6 @@ class _PreviewCardState extends State<PreviewCard> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [stackOverlay, contBottomBar],
         ));
-    return InkWell(onTap: openBusiness, child: cardPreview);
+    return InkWell(onTap: openItem, child: cardPreview);
   }
 }
