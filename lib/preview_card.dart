@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_trail/branding.dart';
 
-class PreviewCard extends Card {
+class PreviewCard extends StatefulWidget {
   final String? strCardImage;
   final String? strOverlayTitle;
   final IconData? iconOverlayTopLeft;
@@ -23,6 +23,52 @@ class PreviewCard extends Card {
       this.strBottomBarTitle,
       this.intBottomBarColor = 0xffffffff})
       : super(key: key);
+
+  @override
+  State<PreviewCard> createState() {
+    // TODO: implement createState
+    return _PreviewCardState(
+        key: key,
+        strCardImage: strCardImage,
+        strOverlayTitle: strOverlayTitle,
+        iconOverlayTopLeft: iconOverlayTopLeft,
+        iconOverlayTopRight: iconOverlayTopRight,
+        boolOverlayTopRightIcon: boolOverlayTopRightIcon,
+        boolOverlayBackgroundSolid: boolOverlayBackgroundSolid,
+        intOverlayBackgroundColor: intBottomBarColor,
+        strBottomBarTitle: strBottomBarTitle,
+        intBottomBarColor: intBottomBarColor);
+  }
+}
+
+class _PreviewCardState extends State<PreviewCard> {
+  final Key? key;
+  final String? strCardImage;
+  final String? strOverlayTitle;
+  final IconData? iconOverlayTopLeft;
+  final IconData? iconOverlayTopRight;
+  final bool? boolOverlayTopRightIcon;
+  final bool? boolOverlayBackgroundSolid;
+  final int intOverlayBackgroundColor;
+  final String? strBottomBarTitle;
+  final int intBottomBarColor;
+  _PreviewCardState(
+      {this.key,
+      this.strOverlayTitle,
+      this.strCardImage,
+      this.iconOverlayTopLeft,
+      this.iconOverlayTopRight,
+      this.boolOverlayTopRightIcon = false,
+      this.boolOverlayBackgroundSolid = false,
+      this.intOverlayBackgroundColor = 0xFF424242,
+      this.strBottomBarTitle,
+      this.intBottomBarColor = 0xffffffff});
+
+  void openBusiness() {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        backgroundColor: const Color(colorBackgroundLightDefault),
+        content: Text(strOverlayTitle ?? "My Flutter trail")));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -110,12 +156,6 @@ class PreviewCard extends Card {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [stackOverlay, contBottomBar],
         ));
-    return InkWell(
-        onTap: () {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              backgroundColor: const Color(colorBackgroundLightDefault),
-              content: Text(strOverlayTitle ?? "My Flutter trail")));
-        },
-        child: cardPreview);
+    return InkWell(onTap: openBusiness, child: cardPreview);
   }
 }

@@ -10,7 +10,7 @@ import 'package:flutter_trail/card_image.dart';
 import 'package:flutter_trail/horizontal_card_list.dart';
 import 'package:flutter_trail/persistent_banner.dart';
 import 'package:flutter_trail/preview_card.dart';
-import 'package:flutter_trail/review.dart';
+import 'package:flutter_trail/review_widget.dart';
 import 'package:flutter_trail/review_list.dart';
 
 class Home extends StatelessWidget {
@@ -226,7 +226,7 @@ class Home extends StatelessWidget {
         height: 400.0,
         child: ReviewList(
             children: arrReviews
-                .map((e) => Review(
+                .map((e) => ReviewWidget(
                       avatar: Avatar(
                         name: e['fullname'].toString(),
                         background: Colors.transparent,

@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_trail/avatar.dart';
 import 'package:flutter_trail/branding.dart';
 
-class Review extends StatelessWidget {
+class ReviewWidget extends StatelessWidget {
   final Avatar? avatar;
   final String? title;
   final String? comment;
-  const Review({Key? key, this.avatar, this.title, this.comment})
+  const ReviewWidget({Key? key, this.avatar, this.title, this.comment})
       : super(key: key);
 
   @override
