@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'business.dart';
+import 'models/business.dart';
 
 class BusinessWidget extends StatefulWidget {
   const BusinessWidget({super.key});

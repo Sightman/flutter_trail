@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_trail/avatar.dart';
 import 'package:flutter_trail/avatar_list.dart';
 import 'package:flutter_trail/branding.dart';
-import 'package:flutter_trail/business.dart';
+import 'package:flutter_trail/models/business.dart';
 import 'package:flutter_trail/card_image.dart';
 import 'package:flutter_trail/horizontal_card_list.dart';
 import 'package:flutter_trail/persistent_banner.dart';
