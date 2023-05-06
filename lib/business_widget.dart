@@ -17,6 +17,7 @@ class _BusinessWidgetState extends State<BusinessWidget> {
   late Future<Business> _business;
   @override
   void initState() {
+    super.initState();
     _business = fetchData('test/businesses.json');
   }
 

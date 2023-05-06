@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_trail/avatar.dart';
 import 'package:flutter_trail/avatar_list.dart';
 import 'package:flutter_trail/branding.dart';
@@ -13,14 +14,50 @@ import 'package:flutter_trail/preview_card.dart';
 import 'package:flutter_trail/review_widget.dart';
 import 'package:flutter_trail/review_list.dart';
 
-class Home extends StatelessWidget {
-  static List<dynamic>? json;
+class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
 
   @override
+  State<StatefulWidget> createState() {
+    return _HomeState();
+  }
+}
+
+class _HomeState extends State<Home> {
+  _HomeState();
+  String? _host;
+  String? _root;
+  late Future<List<dynamic>> _jsonBusinesses;
+
+  Future<List<dynamic>> getJSONArray(String url) async {
+    try {
+      final String payload = await rootBundle.loadString(url);
+      return jsonDecode(payload) as List<dynamic>;
+    } catch (e) {
+      throw Exception("Some information couldn't be retrieved");
+    }
+    //return json;
+  }
+
+  List<Business> fetchBusinesses(List<dynamic> json) {
+    final List<dynamic> businesses = json;
+    List<Business> arrBusinesses =
+        businesses.map((business) => Business.fromJSON(business)).toList();
+    return arrBusinesses;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _host = dotenv.env['HOST'];
+    _root = dotenv.env['ROOT'];
+    _jsonBusinesses = getJSONArray('$_root/test/businesses.json');
+  }
+
+  @override
   Widget build(BuildContext context) {
-    getJSON('test/businesses.json');
-    var jsonBusinesses = json ??
+    var jsonBusinesses =
+        _jsonBusinesses; /* ??
         [
           {
             "id": 1,
@@ -75,7 +112,7 @@ class Home extends StatelessWidget {
               {"linkedin": "", "instagram": "", "facebook": "", "vkontake": ""}
             ]
           }
-        ];
+        ];*/
     final arrMoments = [
       {'id': 1, 'name': 'noe.alvyss', 'photo-url': ''},
       {
@@ -161,18 +198,6 @@ class Home extends StatelessWidget {
             "https://wow24.mx/active/wow24marco/wp-content/uploads/2022/05/Photographer-3-Smartphone.jpg"
       }
     ];
-    var lstCardPartners = jsonBusinesses
-        .map((business) => PreviewCard(
-              key: Key(business['id'].toString()),
-              strCardImage: business['logo-url'] != null
-                  ? business['logo-url'].toString()
-                  : "https://my.alvyss.com/api/v1/cloudron/avatar?2395601373707481",
-              strOverlayTitle: business['brand'].toString(),
-              iconOverlayTopRight: Icons.business,
-              boolOverlayTopRightIcon: true,
-              strBottomBarTitle: business['slogan'].toString(),
-            ))
-        .toList();
     //getJSON('test/users.json');
     var contMomentsMenu = Container(
       color: Colors.blueGrey,
@@ -196,19 +221,43 @@ class Home extends StatelessWidget {
                 .cast(),
       ),
     );
-    var contPartnersMenu = Container(
-      margin: const EdgeInsets.only(top: 5.0, bottom: 5.0),
-      child: HorizontalCardList(
-        title: 'Partners',
-        topRightButtonLabel: 'Todos',
-        topRightButtonBackground: const Color(colorHighlightDark),
-        topRightButtonIcon: Icons.more_horiz_rounded,
-        backwardButtonIcon: Icons.arrow_back_rounded,
-        forwardButtonIcon: Icons.arrow_forward_rounded,
-        background: Colors.blue.shade500,
-        children: lstCardPartners.cast(),
-      ),
-    );
+    var contPartnersMenu = FutureBuilder<List<dynamic>>(
+        future: _jsonBusinesses,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            final List<dynamic> data = snapshot.data!;
+            return Container(
+              margin: const EdgeInsets.only(top: 5.0, bottom: 5.0),
+              child: HorizontalCardList(
+                title: 'Partners',
+                topRightButtonLabel: 'Todos',
+                topRightButtonBackground: const Color(colorHighlightDark),
+                topRightButtonIcon: Icons.more_horiz_rounded,
+                backwardButtonIcon: Icons.arrow_back_rounded,
+                forwardButtonIcon: Icons.arrow_forward_rounded,
+                background: Colors.blue.shade500,
+                children: data
+                    .map((business) => PreviewCard(
+                          key: Key(business['id'].toString()),
+                          strCardImage: business['logoURL'] != null
+                              ? business['logoURL'].toString()
+                              : "https://my.alvyss.com/api/v1/cloudron/avatar?2395601373707481",
+                          strOverlayTitle: business['brand'],
+                          iconOverlayTopRight: Icons.business,
+                          boolOverlayTopRightIcon: true,
+                          strBottomBarTitle: business['slogan'],
+                        ))
+                    .toList(),
+              ),
+            );
+          } else if (snapshot.hasError) {
+            return const Center(child: Text("Some data could't be retrieved."));
+          } else {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        });
     var contMembersMenu = Container(
       margin: const EdgeInsets.only(top: 5.0, bottom: 5.0),
       child: HorizontalCardList(
@@ -299,24 +348,5 @@ class Home extends StatelessWidget {
       ),
       contLstCardSlides,
     ]);
-  }
-
-  Future<void> getJSON(String url) async {
-    try {
-      final String payload = await rootBundle.loadString(url);
-      json = jsonDecode(payload) as List<dynamic>;
-    } catch (e) {
-      Dialog(
-        child: Text(e.toString()),
-      );
-    }
-    //return json;
-  }
-
-  List<Business> setBusinesses(List<dynamic> json) {
-    final businesses = json;
-    List<Business> arrBusinesses =
-        businesses.map((business) => Business.fromJSON(business)).toList();
-    return arrBusinesses;
   }
 }

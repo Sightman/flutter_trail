@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'bottom_nav_bar.dart';
 import 'branding.dart';
@@ -6,7 +7,7 @@ import 'home.dart';
 
 class FlutterTrail extends StatefulWidget {
   FlutterTrail({Key? key, required this.title}) : super(key: key);
-  String? title;
+  String title;
 
   @override
   State<StatefulWidget> createState() {
@@ -16,12 +17,21 @@ class FlutterTrail extends StatefulWidget {
 }
 
 class _FlutterTrail extends State<FlutterTrail> {
-  List<Widget> lstWidgets = [const Home()];
+  _FlutterTrail();
+  String? _host;
+  List<Widget> _lstWidgets = [];
   int widgetIndex = 0;
   Widget _search() {
     return const SnackBar(
       content: Text("Buscar: "),
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _host = dotenv.env['HOST'];
+    _lstWidgets = [const Home()];
   }
 
   @override
@@ -58,7 +68,7 @@ class _FlutterTrail extends State<FlutterTrail> {
         titleSpacing: 50,
         //flexibleSpace: Image.network("https://comunidad-empresarial.ediciondigital.mx/wp-content/uploads/slider6/presentacion5c16-9-03.png")
       ),*/
-      body: lstWidgets[widgetIndex],
+      body: _lstWidgets[widgetIndex],
       bottomNavigationBar: const BottomNavBar(),
       floatingActionButton: FloatingActionButton(
         onPressed: _search,

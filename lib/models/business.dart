@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class Business {
   final int id;
   final String name;
@@ -27,23 +29,23 @@ class Business {
       throw UnimplementedError(
           'Invalid data: $data -> "id" cannot be negative');
     }
-    final name = data['name'] as String;
-    final brand = data['brand'] as String?;
-    final taxID = data['tid'] as String?;
-    final slogan = data['slogan'] as String?;
-    final tagLine = data['tag-line'] as String?;
-    final oneLiner = data['one-liner'] as String?;
-    final logoURL = data['logo-url'] as String?;
-    final industry = data['industry'] as String;
+    final name = utf8.encode(data['name'] as String);
+    final brand = utf8.encode(data['brand'] as String? ?? '');
+    final taxID = utf8.encode(data['tid'] as String? ?? '');
+    final slogan = utf8.encode(data['slogan'] as String? ?? '');
+    final tagLine = utf8.encode(data['tag-line'] as String? ?? '');
+    final oneLiner = utf8.encode(data['one-liner'] as String? ?? '');
+    final logoURL = utf8.encode(data['logo-url'] as String? ?? '');
+    final industry = utf8.encode(data['industry'] as String);
     return Business(
         id: id,
-        name: name,
-        brand: brand,
-        taxID: taxID,
-        slogan: slogan,
-        tagLine: tagLine,
-        oneLiner: oneLiner,
-        logoURL: logoURL,
-        industry: industry);
+        name: utf8.decode(name),
+        brand: utf8.decode(brand),
+        taxID: utf8.decode(taxID),
+        slogan: utf8.decode(slogan),
+        tagLine: utf8.decode(tagLine),
+        oneLiner: utf8.decode(oneLiner),
+        logoURL: utf8.decode(logoURL),
+        industry: utf8.decode(industry));
   }
 }

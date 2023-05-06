@@ -1,15 +1,33 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_trail/bottom_nav_bar.dart';
 import 'package:flutter_trail/branding.dart';
 import 'package:flutter_trail/flutter_trail.dart';
 import 'package:flutter_trail/home.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  String host;
+  dotenv;
+  if (kIsWeb) {
+    await dotenv.load(fileName: 'web/.env');
+  } else if (Platform.isLinux) {
+    await dotenv.load(
+        fileName: '/home/kanbalam/Projects/Multi/flutter_trail/linux/.env');
+  } else if (Platform.isAndroid) {
+    await dotenv.load(fileName: 'android/.env');
+  }
+  host = dotenv.env['HOST']!;
+  runApp(MyApp(
+    host: host,
+  ));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  MyApp({Key? key, this.host}) : super(key: key);
+  String? host;
 
   // This widget is the root of your application.
   @override
@@ -55,7 +73,8 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
+  const MyHomePage({Key? key, required this.title, required this.host})
+      : super(key: key);
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -67,6 +86,7 @@ class MyHomePage extends StatefulWidget {
   // always marked "final".
 
   final String title;
+  final String host;
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -74,6 +94,16 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  _MyHomePageState();
+  String? _host;
+  Widget? _home;
+
+  @override
+  void initState() {
+    super.initState();
+    _host = dotenv.env['HOST'];
+    _home = const Home();
+  }
 
   void _incrementCounter() {
     setState(() {
@@ -125,7 +155,7 @@ class _MyHomePageState extends State<MyHomePage> {
         titleSpacing: 50,
         //flexibleSpace: Image.network("https://comunidad-empresarial.ediciondigital.mx/wp-content/uploads/slider6/presentacion5c16-9-03.png")
       ),*/
-      body: const Home(),
+      body: _home,
       bottomNavigationBar: const BottomNavBar(),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
