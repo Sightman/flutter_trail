@@ -226,8 +226,9 @@ class _HomeState extends State<Home> {
                 children: data
                     .map((business) => PreviewCard(
                           key: Key(business.id.toString()),
-                          strCardImage: business.logoURL ??
-                              "https://my.alvyss.com/api/v1/cloudron/avatar?2395601373707481",
+                          strCardImage: business.logoURL != ''
+                              ? business.logoURL
+                              : "https://my.alvyss.com/api/v1/cloudron/avatar?2395601373707481",
                           strOverlayTitle: business.brand,
                           iconOverlayTopRight: Icons.business,
                           boolOverlayTopRightIcon: true,
