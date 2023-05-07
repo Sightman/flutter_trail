@@ -9,11 +9,13 @@ import 'package:flutter_trail/branding.dart';
 import 'package:flutter_trail/models/business.dart';
 import 'package:flutter_trail/card_image.dart';
 import 'package:flutter_trail/horizontal_card_list.dart';
+import 'package:flutter_trail/models/user.dart';
 import 'package:flutter_trail/persistent_banner.dart';
 import 'package:flutter_trail/preview_card.dart';
 import 'package:flutter_trail/review_widget.dart';
 import 'package:flutter_trail/review_list.dart';
 
+import 'models/review.dart';
 import 'src/requestor.dart';
 
 class Home extends StatefulWidget {
@@ -29,85 +31,23 @@ class _HomeState extends State<Home> {
   _HomeState();
   String? _host;
   String? _root;
+  late Future<List<dynamic>> _jsonUsers;
   late Future<List<dynamic>> _jsonBusinesses;
+  late Future<List<dynamic>> _jsonReviews;
 
   @override
   void initState() {
     super.initState();
     _host = dotenv.env['HOST'];
     _root = dotenv.env['ROOT'];
+    _jsonUsers = Requestor().arrayFromAssets('$_root/test/users.json');
     _jsonBusinesses =
         Requestor().arrayFromAssets('$_root/test/businesses.json');
+    _jsonReviews = Requestor().arrayFromAssets('$_root/test/reviews.json');
   }
 
   @override
   Widget build(BuildContext context) {
-    var jsonBusinesses =
-        _jsonBusinesses; /* ??
-        [
-          {
-            "id": 1,
-            "name": "Alsmid S. A. S. de C. V.",
-            "brand": "Alvyss",
-            "tag-line": "Smart Community Manager",
-            "one-liner": "Inbound marketing tracker",
-            "industry": "Information Technologies",
-            "slogan": "Imagine, share, learn, expand",
-            "logo-url":
-                "https://my.alvyss.com/api/v1/cloudron/avatar?2395601373707481",
-            "social-media": [
-              {
-                "linkedin": "alvyss",
-                "instagram": "alvyss.it",
-                "facebook": "alvyss.it",
-                "twitter": "AlvyssIT",
-                "vkontake": "alvyss"
-              }
-            ]
-          },
-          {
-            "id": 2,
-            "name": "Alsmid S. A. S. de C. V.",
-            "brand": "Alsmid",
-            "tag-line": "",
-            "one-liner": "",
-            "industry": "Science, Technology and Engineering",
-            "slogan": "",
-            "logo-url": null,
-            "social-media": [
-              {
-                "linkedin": "alsmid",
-                "instagram": "alsmid.iot",
-                "facebook": "alsmid.iot",
-                "twitter": "AlsmidIoT",
-                "vkontake": ""
-              }
-            ]
-          },
-          {
-            "id": 3,
-            "name": "Wow24",
-            "brand": "Wow24",
-            "tag-line": "Digital Business Cards",
-            "one-liner": "",
-            "industry": "Information Technology",
-            "slogan": "Digital Empowerment",
-            "logo-url":
-                "https://wow24.mx/wp-content/uploads/2021/11/Logo-WOW24-Final-Black-Small.png",
-            "social-media": [
-              {"linkedin": "", "instagram": "", "facebook": "", "vkontake": ""}
-            ]
-          }
-        ];*/
-    final arrMoments = [
-      {'id': 1, 'name': 'noe.alvyss', 'photo-url': ''},
-      {
-        'id': 2,
-        'name': 'marco.wow24',
-        'photo-url':
-            'https://wow24.mx/active/wow24marco/wp-content/uploads/2022/05/Marco-Circle-2-1536x1536.png'
-      }
-    ];
     var arrPlaces = [
       {
         'id': 1,
@@ -145,18 +85,6 @@ class _HomeState extends State<Home> {
             'https://www.pexels.com/es-es/foto/foto-de-la-estatua-durante-el-dia-3124764/'
       }
     ];
-    var arrReviews = [
-      {
-        "fullname": "Noé Muñoz",
-        "adscription": "CEO at Alsmid",
-        "comment": "So efficient",
-      },
-      {
-        "fullname": "Jane Doe",
-        "adscription": "CIO at Alsmid",
-        "comment": "Useful"
-      }
-    ];
     var arrBannerSlides = [
       {
         "id": 1,
@@ -185,28 +113,42 @@ class _HomeState extends State<Home> {
       }
     ];
     //getJSON('test/users.json');
-    var contMomentsMenu = Container(
-      color: Colors.blueGrey,
-      margin: const EdgeInsets.only(top: 180, bottom: 5),
-      child: AvatarList(
-        children: [
-              const Avatar(
-                name: 'Crear',
-                foreground: Colors.black,
-              )
-            ] +
-            arrMoments
-                .map((moment) => Avatar(
-                      photoURL: moment['photo-url'] != null
-                          ? moment['photo-url'].toString()
-                          : "https://ifei.com.mx/wp-content/uploads/Comunidad-Empresarial_icon.png",
-                      name: moment['name'].toString(),
-                      background: Colors.blueGrey.shade900,
-                    ))
-                .toList()
-                .cast(),
-      ),
-    );
+    var contMomentsMenu = FutureBuilder<List<dynamic>>(
+        future: _jsonUsers,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            final List<User> data = User.static().mapJSON(snapshot.data!);
+            return Container(
+              color: Colors.blueGrey,
+              margin: const EdgeInsets.only(top: 180, bottom: 5),
+              child: AvatarList(
+                children: [
+                      const Avatar(
+                        photoURL:
+                            'https://cdn2.iconfinder.com/data/icons/instagram-40/98/Asset_47-256.png',
+                        name: 'Crear',
+                        foreground: Colors.black,
+                      )
+                    ] +
+                    data
+                        .map((moment) => Avatar(
+                              photoURL: moment.photoURL,
+                              name: moment.username,
+                              background: Colors.blueGrey.shade900,
+                            ))
+                        .toList(),
+              ),
+            );
+          } else if (snapshot.hasError) {
+            return const Center(
+              child: Text("Some data couldn't be retrieved."),
+            );
+          } else {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        });
     var contPartnersMenu = FutureBuilder<List<dynamic>>(
         future: _jsonBusinesses,
         builder: (context, snapshot) {
@@ -226,9 +168,7 @@ class _HomeState extends State<Home> {
                 children: data
                     .map((business) => PreviewCard(
                           key: Key(business.id.toString()),
-                          strCardImage: business.logoURL != ''
-                              ? business.logoURL
-                              : "https://my.alvyss.com/api/v1/cloudron/avatar?2395601373707481",
+                          strCardImage: business.logoURL,
                           strOverlayTitle: business.brand,
                           iconOverlayTopRight: Icons.business,
                           boolOverlayTopRightIcon: true,
@@ -257,20 +197,36 @@ class _HomeState extends State<Home> {
         background: Colors.blue.shade300,
       ),
     );
-    var contReviewList = Container(
-        margin: const EdgeInsets.all(5.0),
-        height: 400.0,
-        child: ReviewList(
-            children: arrReviews
-                .map((e) => ReviewWidget(
-                      avatar: Avatar(
-                        name: e['fullname'].toString(),
-                        background: Colors.transparent,
-                      ),
-                      title: e['adscription'],
-                      comment: e['comment'].toString(),
-                    ))
-                .toList()));
+    var contReviewList = FutureBuilder<List<dynamic>>(
+        future: _jsonReviews,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            List<Review> data = Review.static().mapJSON(snapshot.data!);
+            return Container(
+                margin: const EdgeInsets.all(5.0),
+                height: 400.0,
+                child: ReviewList(
+                    children: data
+                        .map((e) => ReviewWidget(
+                              avatar: Avatar(
+                                name: e.fullname,
+                                background: Colors.transparent,
+                                photoURL: e.photoURL,
+                              ),
+                              title: e.adscription,
+                              comment: e.comment,
+                            ))
+                        .toList()));
+          } else if (snapshot.hasError) {
+            return const Center(
+              child: Text("Some data couldn't be retrieved."),
+            );
+          } else {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        });
     var colMainMenu = ListView(
       children: [
         contMomentsMenu,
@@ -296,43 +252,55 @@ class _HomeState extends State<Home> {
                 .toList()));
     return Stack(children: [
       colMainMenu,
-      PersistentBanner(
-        title: 'My Flutter learning path',
-        leading: const Image(image: NetworkImage(imgLogoBrand)),
-        flexibleSpace: AvatarList(
-          title: '',
-          background: const Color(colorForegroundDarkDefault),
-          children: [
-                const Avatar(
-                  name: 'Crear',
-                  background: Color(0x50ffffff),
-                  foreground: Colors.black,
-                )
-              ] +
-              arrMoments
-                  .map((moment) => Avatar(
-                        photoURL: moment['photo-url'] != null
-                            ? moment['photo-url'].toString()
-                            : 'https://ifei.com.mx/wp-content/uploads/Comunidad-Empresarial_icon.png',
-                        name: moment['name'].toString(),
-                        background: Colors.blueGrey.shade900,
-                      ))
-                  .toList()
-                  .cast(),
-        ),
-        actions: const [
-          Icon(
-            Icons.notifications_rounded,
-            color: Color(colorPrimaryDarkBrand),
-            size: 40,
-          ),
-          Icon(
-            Icons.account_circle_rounded,
-            color: Color(colorPrimaryDarkBrand),
-            size: 40,
-          )
-        ],
-      ),
+      FutureBuilder<List<dynamic>>(
+          future: _jsonUsers,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              List<User> data = User.static().mapJSON(snapshot.data!);
+              return PersistentBanner(
+                title: 'My Flutter learning path',
+                leading: const Image(image: NetworkImage(imgLogoBrand)),
+                flexibleSpace: AvatarList(
+                  title: '',
+                  background: const Color(colorForegroundDarkDefault),
+                  children: [
+                        const Avatar(
+                          name: 'Crear',
+                          background: Color(0x50ffffff),
+                          foreground: Colors.black,
+                        )
+                      ] +
+                      data
+                          .map((moment) => Avatar(
+                                photoURL: moment.photoURL,
+                                name: moment.username,
+                                background: Colors.blueGrey.shade900,
+                              ))
+                          .toList(),
+                ),
+                actions: const [
+                  Icon(
+                    Icons.notifications_rounded,
+                    color: Color(colorPrimaryDarkBrand),
+                    size: 40,
+                  ),
+                  Icon(
+                    Icons.account_circle_rounded,
+                    color: Color(colorPrimaryDarkBrand),
+                    size: 40,
+                  )
+                ],
+              );
+            } else if (snapshot.hasError) {
+              return const Center(
+                child: Text("Some data couldn't be retrieved."),
+              );
+            } else {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+          }),
       contLstCardSlides,
     ]);
   }

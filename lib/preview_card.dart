@@ -11,6 +11,7 @@ class PreviewCard extends StatefulWidget {
   final Color colorOverlayBackgroundColor;
   final String? strBottomBarTitle;
   final int? intBottomBarColor;
+  final double? dblImageScale;
   const PreviewCard(
       {Key? key,
       this.strOverlayTitle,
@@ -21,7 +22,8 @@ class PreviewCard extends StatefulWidget {
       this.boolOverlayBackgroundSolid = false,
       this.colorOverlayBackgroundColor = const Color(0xFF424242),
       this.strBottomBarTitle,
-      this.intBottomBarColor = 0xffffffff})
+      this.intBottomBarColor = 0xffffffff,
+      this.dblImageScale = 1.0})
       : super(key: key);
 
   @override
@@ -41,6 +43,7 @@ class _PreviewCardState extends State<PreviewCard> {
   Color _colorOverlayBackgroundColor = const Color(0xFF424242);
   String? _strBottomBarTitle = 'Bottom bar';
   int? _intBottomBarColor = 0xffffffff;
+  double? _dblImageScale = 1.0;
   _PreviewCardState();
 
   @override
@@ -56,6 +59,7 @@ class _PreviewCardState extends State<PreviewCard> {
     _colorOverlayBackgroundColor = widget.colorOverlayBackgroundColor;
     _strBottomBarTitle = widget.strBottomBarTitle;
     _intBottomBarColor = widget.intBottomBarColor;
+    _dblImageScale = widget.dblImageScale;
   }
 
   void openItem() {
@@ -91,7 +95,7 @@ class _PreviewCardState extends State<PreviewCard> {
           image: DecorationImage(
               fit: BoxFit.cover,
               alignment: Alignment.center,
-              image: NetworkImage(_strCardImage!))),
+              image: NetworkImage(_strCardImage!, scale: _dblImageScale!))),
     );
     var contOverlayTitle = Container(
       margin: const EdgeInsets.only(top: 135, left: 5),

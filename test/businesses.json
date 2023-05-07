@@ -55,21 +55,20 @@
     },
     {
         "id": 7,
-        "name": "Alsmid Industries",
+        "name": "Alsmid, S. A. S. de C. V.",
         "brand": "Alsmid",
         "tag-line": "",
         "one-liner": "",
-        "slogan": "Do what you enjoy",
+        "slogan": "You create, we build",
         "industry": "Science, Technology and Engineering"
     },
     {
         "id": 8,
-        "name": "Edición Digital",
-        "brand": "Edigital",
-        "tag-line": "",
-        "one-liner": "",
-        "slogan": "Tell your story",
-        "industry": "Digital Media",
-        "logo-url": "https://ifei.com.mx/wp-content/uploads/edigital-logo.png"
+        "name": "Alsmid, S. A. S. de C. V.",
+        "brand": "MonkeyDoc",
+        "tag-line": "Smart documents",
+        "one-liner": "AI powered document assitant",
+        "slogan": "More than writing",
+        "industry": "Science, Technology and Engineering"
     }
 ]

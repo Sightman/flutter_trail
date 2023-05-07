@@ -6,8 +6,14 @@ class Avatar extends StatelessWidget {
   final String? name;
   final Color? background;
   final Color? foreground;
+  final double? imageScale;
   const Avatar(
-      {Key? key, this.photoURL, this.name, this.background, this.foreground})
+      {Key? key,
+      this.photoURL = "",
+      this.name,
+      this.background,
+      this.foreground,
+      this.imageScale = 1.0})
       : super(key: key);
 
   @override
@@ -22,7 +28,8 @@ class Avatar extends StatelessWidget {
               Border.all(color: const Color(colorPrimaryDarkBrand), width: 3.0),
           color: Colors.blueGrey,
           borderRadius: const BorderRadius.all(Radius.circular(100.0)),
-          image: DecorationImage(image: NetworkImage(photoURL ?? ''))),
+          image: DecorationImage(
+              image: NetworkImage(photoURL!, scale: imageScale!))),
     );
     var contName = Container(
       alignment: Alignment.center,

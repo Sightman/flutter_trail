@@ -31,8 +31,7 @@ class Business {
       this.slogan = '',
       this.tagLine = '',
       this.oneLiner = '',
-      this.logoURL =
-          'https://my.alvyss.com/api/v1/cloudron/avatar?2395601373707481',
+      this.logoURL,
       this.industry});
   Business.__();
 
@@ -50,7 +49,8 @@ class Business {
     var slogan = utf8.encode(data['slogan'] as String? ?? '');
     var tagLine = utf8.encode(data['tag-line'] as String? ?? '');
     var oneLiner = utf8.encode(data['one-liner'] as String? ?? '');
-    var logoURL = utf8.encode(data['logo-url'] as String? ?? '');
+    var logoURL = utf8.encode(data['logo-url'] as String? ??
+        'https://my.alvyss.com/api/v1/cloudron/avatar?2395601373707481');
     var industry = utf8.encode(data['industry'] as String? ?? '');
     return Business._(
         id: id,
