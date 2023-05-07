@@ -14,6 +14,8 @@ import 'package:flutter_trail/preview_card.dart';
 import 'package:flutter_trail/review_widget.dart';
 import 'package:flutter_trail/review_list.dart';
 
+import 'src/requestor.dart';
+
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
 
@@ -29,29 +31,13 @@ class _HomeState extends State<Home> {
   String? _root;
   late Future<List<dynamic>> _jsonBusinesses;
 
-  Future<List<dynamic>> getJSONArray(String url) async {
-    try {
-      final String payload = await rootBundle.loadString(url);
-      return jsonDecode(payload) as List<dynamic>;
-    } catch (e) {
-      throw Exception("Some information couldn't be retrieved");
-    }
-    //return json;
-  }
-
-  List<Business> fetchBusinesses(List<dynamic> json) {
-    final List<dynamic> businesses = json;
-    List<Business> arrBusinesses =
-        businesses.map((business) => Business.fromJSON(business)).toList();
-    return arrBusinesses;
-  }
-
   @override
   void initState() {
     super.initState();
     _host = dotenv.env['HOST'];
     _root = dotenv.env['ROOT'];
-    _jsonBusinesses = getJSONArray('$_root/test/businesses.json');
+    _jsonBusinesses =
+        Requestor().arrayFromAssets('$_root/test/businesses.json');
   }
 
   @override
@@ -225,7 +211,8 @@ class _HomeState extends State<Home> {
         future: _jsonBusinesses,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            List<Business> data = fetchBusinesses(snapshot.data!);
+            final List<Business> data =
+                Business.static().mapJSON(snapshot.data!);
             return Container(
               margin: const EdgeInsets.only(top: 5.0, bottom: 5.0),
               child: HorizontalCardList(
@@ -239,9 +226,8 @@ class _HomeState extends State<Home> {
                 children: data
                     .map((business) => PreviewCard(
                           key: Key(business.id.toString()),
-                          strCardImage: business.logoURL != ''
-                              ? business.logoURL.toString()
-                              : "https://my.alvyss.com/api/v1/cloudron/avatar?2395601373707481",
+                          strCardImage: business.logoURL ??
+                              "https://my.alvyss.com/api/v1/cloudron/avatar?2395601373707481",
                           strOverlayTitle: business.brand,
                           iconOverlayTopRight: Icons.business,
                           boolOverlayTopRightIcon: true,
