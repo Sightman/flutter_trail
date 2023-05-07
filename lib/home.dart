@@ -225,7 +225,7 @@ class _HomeState extends State<Home> {
         future: _jsonBusinesses,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            final List<dynamic> data = snapshot.data!;
+            List<Business> data = fetchBusinesses(snapshot.data!);
             return Container(
               margin: const EdgeInsets.only(top: 5.0, bottom: 5.0),
               child: HorizontalCardList(
@@ -238,14 +238,14 @@ class _HomeState extends State<Home> {
                 background: Colors.blue.shade500,
                 children: data
                     .map((business) => PreviewCard(
-                          key: Key(business['id'].toString()),
-                          strCardImage: business['logoURL'] != null
-                              ? business['logoURL'].toString()
+                          key: Key(business.id.toString()),
+                          strCardImage: business.logoURL != ''
+                              ? business.logoURL.toString()
                               : "https://my.alvyss.com/api/v1/cloudron/avatar?2395601373707481",
-                          strOverlayTitle: business['brand'],
+                          strOverlayTitle: business.brand,
                           iconOverlayTopRight: Icons.business,
                           boolOverlayTopRightIcon: true,
-                          strBottomBarTitle: business['slogan'],
+                          strBottomBarTitle: business.slogan,
                         ))
                     .toList(),
               ),
