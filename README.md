@@ -1,5 +1,6 @@
 # Flutter trail
 Flutter learning path
+All .png files needed for creating the launcher icon or any other icons should be stored in a CDN and they should be copied to the assets folder manually in the production environment.
 # Dart SpaceX API Client (v4)
 
 [![pub package](https://img.shields.io/pub/v/spacex_api.svg)](https://pub.dev/packages/spacex_api)
