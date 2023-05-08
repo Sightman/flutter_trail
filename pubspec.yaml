@@ -92,17 +92,18 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+  assets:
+    - assets/icons/logo.svg
+    - linux/.env
+    - android/.env
+    - web/.env
+    - ios/.env
+    - macos/.env
+    - windows/.env
+    - test/businesses.json
+    - test/users.json
+    - test/reviews.json
 fonts:
   - family: M Plus Rounded
     fonts:
       - assets: assets/fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Regular.ttf
-assets:
-  - assets/icons/logo.svg
-  - test/businesses.json
-  - test/users.jsons
-  - linux/.env
-  - web/.env
-  - android/.env
-  - ios/.env
-  - macos/.env
-  - windows/.env

@@ -40,10 +40,9 @@ class _HomeState extends State<Home> {
     super.initState();
     _host = dotenv.env['HOST'];
     _root = dotenv.env['ROOT'];
-    _jsonUsers = Requestor().arrayFromAssets('$_root/test/users.json');
-    _jsonBusinesses =
-        Requestor().arrayFromAssets('$_root/test/businesses.json');
-    _jsonReviews = Requestor().arrayFromAssets('$_root/test/reviews.json');
+    _jsonUsers = Requestor().arrayFromAssets('test/users.json');
+    _jsonBusinesses = Requestor().arrayFromAssets('test/businesses.json');
+    _jsonReviews = Requestor().arrayFromAssets('test/reviews.json');
   }
 
   @override
@@ -266,6 +265,8 @@ class _HomeState extends State<Home> {
                   children: [
                         const Avatar(
                           name: 'Crear',
+                          photoURL:
+                              'https://cdn2.iconfinder.com/data/icons/instagram-40/98/Asset_47-256.png',
                           background: Color(0x50ffffff),
                           foreground: Colors.black,
                         )

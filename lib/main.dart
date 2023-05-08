@@ -7,18 +7,16 @@ import 'package:flutter_trail/flutter_trail.dart';
 import 'package:flutter_trail/home.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:path_provider/path_provider.dart';
 
 void main() async {
   String host;
   dotenv;
   if (kIsWeb) {
-    await dotenv.load(fileName: '/web/.env');
+    await dotenv.load(fileName: 'web/.env');
   } else if (Platform.isLinux) {
-    await dotenv.load(
-        fileName: '/home/kanbalam/Projects/Multi/flutter_trail/linux/.env');
+    await dotenv.load(fileName: 'linux/.env');
   } else if (Platform.isAndroid) {
-    await dotenv.load(fileName: '/android/.env');
+    await dotenv.load(fileName: 'android/.env');
   }
   host = dotenv.env['HOST']!;
   runApp(MyApp(
