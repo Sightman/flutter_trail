@@ -3,15 +3,16 @@
 *.log
 *.pyc
 *.swp
+*.jpeg
+*.jpg
+*.bmp
+*.png
 .DS_Store
 .atom/
 .buildlog/
 .history
 .svn/
-<<<<<<< HEAD
 migrate_working_dir/
-=======
->>>>>>> 5dfae15f29c88ce4a4a38971e50bb5d4951bc773
 
 # IntelliJ related
 *.iml
@@ -26,17 +27,13 @@ migrate_working_dir/
 
 # Flutter/Dart/Pub related
 **/doc/api/
-<<<<<<< HEAD
 **/ios/Flutter/.last_build_id
-=======
->>>>>>> 5dfae15f29c88ce4a4a38971e50bb5d4951bc773
 .dart_tool/
 .flutter-plugins
 .flutter-plugins-dependencies
 .packages
 .pub-cache/
 .pub/
-<<<<<<< HEAD
 /build/
 
 # Web related
@@ -52,7 +49,6 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
-=======
 build/
 
 # Android related
@@ -97,4 +93,3 @@ build/
 !**/ios/**/default.mode2v3
 !**/ios/**/default.pbxuser
 !**/ios/**/default.perspectivev3
->>>>>>> 5dfae15f29c88ce4a4a38971e50bb5d4951bc773

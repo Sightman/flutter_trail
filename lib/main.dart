@@ -7,17 +7,18 @@ import 'package:flutter_trail/flutter_trail.dart';
 import 'package:flutter_trail/home.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:path_provider/path_provider.dart';
 
 void main() async {
   String host;
   dotenv;
   if (kIsWeb) {
-    await dotenv.load(fileName: 'web/.env');
+    await dotenv.load(fileName: '/web/.env');
   } else if (Platform.isLinux) {
     await dotenv.load(
         fileName: '/home/kanbalam/Projects/Multi/flutter_trail/linux/.env');
   } else if (Platform.isAndroid) {
-    await dotenv.load(fileName: 'android/.env');
+    await dotenv.load(fileName: '/android/.env');
   }
   host = dotenv.env['HOST']!;
   runApp(MyApp(
@@ -26,8 +27,8 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({Key? key, this.host}) : super(key: key);
   String? host;
+  MyApp({Key? key, this.host}) : super(key: key);
 
   // This widget is the root of your application.
   @override
@@ -94,9 +95,9 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
-  _MyHomePageState();
   String? _host;
   Widget? _home;
+  _MyHomePageState();
 
   @override
   void initState() {
