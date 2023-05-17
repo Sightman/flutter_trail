@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-import 'bottom_nav_bar.dart';
-import 'branding.dart';
-import 'home.dart';
+import 'menus/bottom_nav_bar.dart';
+import 'themes/branding.dart';
+import 'screens/home.dart';
 
 class FlutterTrail extends StatefulWidget {
   FlutterTrail({Key? key, required this.title}) : super(key: key);

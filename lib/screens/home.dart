@@ -3,20 +3,20 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutter_trail/avatar.dart';
-import 'package:flutter_trail/avatar_list.dart';
-import 'package:flutter_trail/branding.dart';
+import 'package:flutter_trail/cards/avatar.dart';
+import 'package:flutter_trail/lists/avatar.dart';
+import 'package:flutter_trail/themes/branding.dart';
 import 'package:flutter_trail/models/business.dart';
-import 'package:flutter_trail/card_image.dart';
-import 'package:flutter_trail/horizontal_card_list.dart';
+import 'package:flutter_trail/cards/image.dart';
+import 'package:flutter_trail/lists/horizontal_card.dart';
 import 'package:flutter_trail/models/user.dart';
-import 'package:flutter_trail/persistent_banner.dart';
-import 'package:flutter_trail/preview_card.dart';
-import 'package:flutter_trail/review_widget.dart';
-import 'package:flutter_trail/review_list.dart';
+import 'package:flutter_trail/menus/persistent_banner.dart';
+import 'package:flutter_trail/cards/preview.dart';
+import 'package:flutter_trail/cards/review.dart';
+import 'package:flutter_trail/lists/review.dart';
 
-import 'models/review.dart';
-import 'src/requestor.dart';
+import '../models/review.dart';
+import '../src/requestor.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);

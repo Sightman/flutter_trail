@@ -60,6 +60,7 @@ android {
             signingConfig signingConfigs.debug
         }
     }
+    namespace 'com.alvyss.flutter_trail'
 }
 
 flutter {

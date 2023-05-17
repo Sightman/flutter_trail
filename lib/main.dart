@@ -1,10 +1,10 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_trail/bottom_nav_bar.dart';
-import 'package:flutter_trail/branding.dart';
+import 'package:flutter_trail/menus/bottom_nav_bar.dart';
+import 'package:flutter_trail/themes/branding.dart';
 import 'package:flutter_trail/flutter_trail.dart';
-import 'package:flutter_trail/home.dart';
+import 'package:flutter_trail/screens/home.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_trail/branding.dart';
-import 'package:flutter_trail/persistent_banner.dart';
+import 'package:flutter_trail/menus/persistent_banner.dart';
+
+import 'themes/branding.dart';
 
 class Welcome extends StatelessWidget {
   const Welcome({super.key});
