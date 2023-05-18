@@ -17,55 +17,27 @@ void main() async {
     await dotenv.load(fileName: 'linux/.env');
   } else if (Platform.isAndroid) {
     await dotenv.load(fileName: 'android/.env');
+  } else if (Platform.isIOS) {
+    await dotenv.load(fileName: 'ios/.env');
   }
   host = dotenv.env['HOST']!;
   runApp(MyApp(
     host: host,
+    theme: themeDark,
   ));
 }
 
 class MyApp extends StatelessWidget {
   String? host;
-  MyApp({Key? key, this.host}) : super(key: key);
+  ThemeData? theme;
+  MyApp({Key? key, this.host, this.theme}) : super(key: key);
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Trail',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.cyan,
-        colorScheme: const ColorScheme(
-            background: Color(colorBackgroundDarkDefault),
-            primary: Color(colorPrimaryDarkBrand),
-            secondary: Color(colorSecondaryDarkBrand),
-            brightness: Brightness.dark,
-            error: Colors.redAccent,
-            surface: Colors.blue,
-            onBackground: Color(colorForegroundDarkDefault),
-            onPrimary: Colors.white,
-            onSecondary: Colors.white70,
-            onError: Colors.redAccent,
-            onSurface: Colors.blue),
-        bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-            backgroundColor: Colors.white24,
-            selectedIconTheme: IconThemeData(color: Color(colorHighlightDark)),
-            unselectedIconTheme:
-                IconThemeData(color: Color(colorPrimaryDarkBrand)),
-            selectedItemColor: Color(colorHighlightDark),
-            unselectedItemColor: Color(colorPrimaryDarkBrand),
-            type: BottomNavigationBarType.fixed),
-        secondaryHeaderColor: Colors.transparent,
-      ),
+      theme: theme,
       home: FlutterTrail(title: 'My Flutter learning path'),
     );
   }
