@@ -1,0 +1,37 @@
+[
+    {
+      "id": 1,
+      "name": "Ciudad de México",
+      "author": "Andres Ordaz Vega",
+      "photo-url":
+          "https://www.pexels.com/es-es/foto/ciudad-amanecer-puesta-de-sol-rascacielos-12854629/"
+    },
+    {
+      "id": 2,
+      "name": "Guadalajara",
+      "author": "Fernando  Paleta",
+      "photo-url":
+          "https://www.pexels.com/es-es/foto/punto-de-referencia-panorama-urbano-edificios-oficina-12468084/"
+    },
+    {
+      "id": 3,
+      "name": "Cholula",
+      "author": "Felipe Perez",
+      "photo-url":
+          "https://www.pexels.com/es-es/foto/la-iglesia-y-el-volcan-12282043/"
+    },
+    {
+      "id": 4,
+      "name": "Cancún",
+      "author": "Daniela Velarde",
+      "photo-url":
+          "https://www.pexels.com/es-es/foto/paisaje-punto-de-referencia-edificio-historico-5703115/"
+    },
+    {
+      "id": 5,
+      "name": "Roma",
+      "author": "Heinz Klier",
+      "photo-url":
+          "https://www.pexels.com/es-es/foto/foto-de-la-estatua-durante-el-dia-3124764/"
+    }
+  ]
