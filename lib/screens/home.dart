@@ -19,7 +19,8 @@ import '../models/review.dart';
 import '../src/requestor.dart';
 
 class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+  String? title;
+  Home({Key? key, this.title}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -28,89 +29,31 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  _HomeState();
+  String? _title;
   String? _host;
   String? _root;
   late Future<List<dynamic>> _jsonUsers;
   late Future<List<dynamic>> _jsonBusinesses;
   late Future<List<dynamic>> _jsonReviews;
+  late Future<List<dynamic>> _jsonPlaces;
+  late Future<List<dynamic>> _jsonSlides;
+  _HomeState();
 
   @override
   void initState() {
     super.initState();
+    _title = super.widget.title;
     _host = dotenv.env['HOST'];
     _root = dotenv.env['ROOT'];
     _jsonUsers = Requestor().arrayFromAssets('test/users.json');
     _jsonBusinesses = Requestor().arrayFromAssets('test/businesses.json');
     _jsonReviews = Requestor().arrayFromAssets('test/reviews.json');
+    _jsonPlaces = Requestor().arrayFromAssets('test/places.json');
+    _jsonSlides = Requestor().arrayFromAssets('test/slides.json');
   }
 
   @override
   Widget build(BuildContext context) {
-    var arrPlaces = [
-      {
-        'id': 1,
-        'name': 'Ciudad de México',
-        'author': 'Andres Ordaz Vega',
-        'photo-url':
-            'https://www.pexels.com/es-es/foto/ciudad-amanecer-puesta-de-sol-rascacielos-12854629/'
-      },
-      {
-        'id': 2,
-        'name': 'Guadalajara',
-        'author': 'Fernando  Paleta',
-        'photo-url':
-            'https://www.pexels.com/es-es/foto/punto-de-referencia-panorama-urbano-edificios-oficina-12468084/'
-      },
-      {
-        'id': 3,
-        'name': 'Cholula',
-        'author': 'Felipe Perez',
-        'photo-url':
-            'https://www.pexels.com/es-es/foto/la-iglesia-y-el-volcan-12282043/'
-      },
-      {
-        'id': 4,
-        'name': 'Cancún',
-        'author': 'Daniela Velarde',
-        'photo-url':
-            'https://www.pexels.com/es-es/foto/paisaje-punto-de-referencia-edificio-historico-5703115/'
-      },
-      {
-        'id': 5,
-        'name': 'Roma',
-        'author': 'Heinz Klier',
-        'photo-url':
-            'https://www.pexels.com/es-es/foto/foto-de-la-estatua-durante-el-dia-3124764/'
-      }
-    ];
-    var arrBannerSlides = [
-      {
-        "id": 1,
-        "photo-url":
-            "https://wow24.mx/active/wow24marco/wp-content/uploads/2022/05/Traveler-Smartphone.jpg"
-      },
-      {
-        "id": 2,
-        "photo-url":
-            "https://wow24.mx/active/wow24marco/wp-content/uploads/2022/05/Business-Man-Smartphone-2-1.jpg"
-      },
-      {
-        "id": 3,
-        "photo-url":
-            "https://wow24.mx/active/wow24marco/wp-content/uploads/2022/05/Business-Woman-Smartphone-2-2.jpg"
-      },
-      {
-        "id": 4,
-        "photo-url":
-            "https://wow24.mx/active/wow24marco/wp-content/uploads/2022/05/Musician-Smartphone.jpg"
-      },
-      {
-        "id": 5,
-        "photo-url":
-            "https://wow24.mx/active/wow24marco/wp-content/uploads/2022/05/Photographer-3-Smartphone.jpg"
-      }
-    ];
     //getJSON('test/users.json');
     var contMomentsMenu = FutureBuilder<List<dynamic>>(
         future: _jsonUsers,
@@ -234,21 +177,36 @@ class _HomeState extends State<Home> {
         contReviewList
       ],
     );
-    var contLstCardSlides = SizedBox(
-        height: 350,
-        child: HorizontalCardList(
-            height: 210,
-            title: '',
-            topRightButtonLabel: '',
-            background: Colors.transparent,
-            children: arrBannerSlides
-                .map((slide) => CardImage(
-                    image: NetworkImage(slide['photo-url'] != null
-                        ? slide['photo-url'].toString() == ''
-                            ? "https://unsplash.com/es/fotos/nEwLb1onsDo"
-                            : slide['photo-url'].toString()
-                        : "https://imgur.com/8m1tosq")))
-                .toList()));
+    var contLstCardSlides = FutureBuilder(
+        future: _jsonSlides,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            var slides = snapshot.data! as List<dynamic>;
+            return SizedBox(
+                height: 350,
+                child: HorizontalCardList(
+                    height: 210,
+                    title: '',
+                    topRightButtonLabel: '',
+                    background: Colors.transparent,
+                    children: slides
+                        .map((slide) => CardImage(
+                            image: NetworkImage(slide['photo-url'] != null
+                                ? slide['photo-url'].toString() == ''
+                                    ? "https://unsplash.com/es/fotos/nEwLb1onsDo"
+                                    : slide['photo-url'].toString()
+                                : "https://imgur.com/8m1tosq")))
+                        .toList()));
+          } else if (snapshot.hasError) {
+            return const Center(
+              child: Text("Some data could't be retrieved"),
+            );
+          } else {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        });
     return Stack(children: [
       colMainMenu,
       FutureBuilder<List<dynamic>>(
@@ -257,7 +215,7 @@ class _HomeState extends State<Home> {
             if (snapshot.hasData) {
               List<User> data = User.static().mapJSON(snapshot.data!);
               return PersistentBanner(
-                title: 'My Flutter learning path',
+                title: _title,
                 leading: const Image(image: NetworkImage(imgLogoBrand)),
                 flexibleSpace: AvatarList(
                   title: '',

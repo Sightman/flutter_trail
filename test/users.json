@@ -1,4 +1,4 @@
 [
-    { "id": 1, "username": "doe.john", "firstname": "john", "lastname": "doe", "email": "john.doe@sample.com", "password": "dummypass"},
-    { "id": 2, "username": "qew.jane", "firstname": "jane", "lastname": "qew", "email": "jane.qew@sample.com", "password": "dummypass", "mobile": "5550690" }
+    { "id": 1, "username": "doe.john", "firstname": "john", "lastname": "doe", "email": "john.doe@sample.com", "password": "dummypass", "mobile": "5550691", "is-confirmed": false},
+    { "id": 2, "username": "qew.jane", "firstname": "jane", "lastname": "qew", "email": "jane.qew@sample.com", "password": "dummypass", "mobile": "5550690", "is-confirmed": false}
 ]

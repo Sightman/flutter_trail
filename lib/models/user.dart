@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'dart:ffi';
 
+import 'package:flutter_trail/models/business.dart';
 import 'package:flutter_trail/src/requestor.dart';
 
 class User {
@@ -14,7 +16,9 @@ class User {
   int? role = 0;
   String? photoURL =
       'https://cdn4.iconfinder.com/data/icons/glyphs/24/icons_user2-256.png';
-  List<String>? businesses = [];
+  String mobile = '';
+  List<Business>? businesses = [];
+  bool? isConfirmed = false;
   User(
       {required this.id,
       required this.firstname,
@@ -26,7 +30,9 @@ class User {
       required this.password,
       this.role,
       this.photoURL,
-      required this.businesses});
+      required this.businesses,
+      required this.mobile,
+      this.isConfirmed});
   User._(
       {required this.id,
       required this.firstname,
@@ -38,7 +44,9 @@ class User {
       required this.password,
       this.role,
       this.photoURL,
-      this.businesses});
+      this.businesses,
+      required this.mobile,
+      this.isConfirmed});
   User.__();
 
   factory User.fromJSON(Map<String, dynamic> data) {
@@ -59,7 +67,9 @@ class User {
     var role = data['role'] as int? ?? 0;
     var photoURL = utf8.encode(data['photo-url'] as String? ??
         'https://cdn4.iconfinder.com/data/icons/glyphs/24/icons_user2-256.png');
-    var businesses = data['businesses'] as List<String>? ?? [];
+    var businesses = data['businesses'] as List<Business>? ?? [];
+    var mobile = utf8.encode(data['mobile'] as String);
+    var isConfirmed = data['is-confirmed'] as bool;
     return User._(
         id: id,
         firstname: utf8.decode(firstname),
@@ -71,7 +81,9 @@ class User {
         password: utf8.decode(password),
         role: role,
         photoURL: utf8.decode(photoURL),
-        businesses: businesses);
+        businesses: businesses,
+        mobile: utf8.decode(mobile),
+        isConfirmed: isConfirmed);
   }
 
   List<User> mapJSON(List<dynamic> json) {

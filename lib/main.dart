@@ -64,6 +64,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  String? _title;
   int _counter = 0;
   String? _host;
   Widget? _home;
@@ -72,8 +73,9 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
+    _title = super.widget.title;
     _host = dotenv.env['HOST'];
-    _home = const Home();
+    _home = Home(title: _title);
   }
 
   void _incrementCounter() {

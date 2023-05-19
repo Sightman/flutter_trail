@@ -17,10 +17,11 @@ class FlutterTrail extends StatefulWidget {
 }
 
 class _FlutterTrail extends State<FlutterTrail> {
-  _FlutterTrail();
+  String? _title;
   String? _host;
   List<Widget> _lstWidgets = [];
   int widgetIndex = 0;
+  _FlutterTrail();
   Widget _search() {
     return const SnackBar(
       content: Text("Buscar: "),
@@ -30,8 +31,9 @@ class _FlutterTrail extends State<FlutterTrail> {
   @override
   void initState() {
     super.initState();
+    _title = super.widget.title;
     _host = dotenv.env['HOST'];
-    _lstWidgets = [const Home()];
+    _lstWidgets = [Home(title: _title)];
   }
 
   @override
