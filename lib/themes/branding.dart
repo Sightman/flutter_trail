@@ -22,6 +22,7 @@ ThemeData themeDark = ThemeData(
   // or simply save your changes to "hot reload" in a Flutter IDE).
   // Notice that the counter didn't reset back to zero; the application
   // is not restarted.
+  fontFamily: "M Plus Rounded",
   primarySwatch: Colors.cyan,
   colorScheme: const ColorScheme(
       background: Color(colorBackgroundDarkDefault),
@@ -41,6 +42,8 @@ ThemeData themeDark = ThemeData(
       unselectedIconTheme: IconThemeData(color: Color(colorPrimaryDarkBrand)),
       selectedItemColor: Color(colorHighlightDark),
       unselectedItemColor: Color(colorPrimaryDarkBrand),
+      selectedLabelStyle: TextStyle(color: Color(colorHighlightDark)),
+      unselectedLabelStyle: TextStyle(color: Color(colorPrimaryDarkBrand)),
       type: BottomNavigationBarType.fixed),
   secondaryHeaderColor: Colors.transparent,
 );
@@ -54,6 +57,7 @@ ThemeData themeLight = ThemeData(
   // or simply save your changes to "hot reload" in a Flutter IDE).
   // Notice that the counter didn't reset back to zero; the application
   // is not restarted.
+  fontFamily: "M Plus Rounded",
   primarySwatch: Colors.cyan,
   colorScheme: const ColorScheme(
       background: Color(colorBackgroundLightDefault),
@@ -73,6 +77,8 @@ ThemeData themeLight = ThemeData(
       unselectedIconTheme: IconThemeData(color: Color(colorPrimaryDarkBrand)),
       selectedItemColor: Color(colorHighlightDark),
       unselectedItemColor: Color(colorPrimaryDarkBrand),
+      selectedLabelStyle: TextStyle(color: Color(colorHighlightDark)),
+      unselectedLabelStyle: TextStyle(color: Color(colorPrimaryDarkBrand)),
       type: BottomNavigationBarType.fixed),
   secondaryHeaderColor: Colors.transparent,
 );

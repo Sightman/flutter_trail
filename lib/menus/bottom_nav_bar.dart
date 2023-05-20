@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import '/themes/branding.dart';
 
 class BottomNavBar extends StatefulWidget {
-  final Theme? theme;
+  ThemeData? theme;
+  int? selectedItem = -1;
   List<BottomNavigationBarItem> items;
-  BottomNavBar({Key? key, this.theme, required this.items}) : super(key: key);
+  BottomNavBar({Key? key, this.theme, this.selectedItem, required this.items})
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -13,12 +15,25 @@ class BottomNavBar extends StatefulWidget {
 }
 
 class _BottomNavBarState extends State<BottomNavBar> {
+  int? _widget;
+  int? _selectedItem;
+  ThemeData? _theme;
   List<BottomNavigationBarItem> _items = [];
   _BottomNavBarState();
   @override
   void initState() {
     super.initState();
+    _widget = 0;
+    _selectedItem = super.widget.selectedItem ?? -1;
+    _theme = super.widget.theme ?? themeDark;
     _items = super.widget.items;
+  }
+
+  void _onTap(item) {
+    _widget = item;
+    SnackBar(
+      content: Text("$_widget"),
+    );
   }
 
   @override
@@ -29,7 +44,15 @@ class _BottomNavBarState extends State<BottomNavBar> {
             primaryColor: const Color(colorPrimaryDarkBrand)),
         child: BottomNavigationBar(
           items: _items,
+          onTap: _onTap,
+          selectedIconTheme: _selectedItem! > 0
+              ? _theme!.bottomNavigationBarTheme.selectedIconTheme
+              : _theme!.bottomNavigationBarTheme.unselectedIconTheme,
+          selectedLabelStyle: _selectedItem! > 0
+              ? _theme!.bottomNavigationBarTheme.selectedLabelStyle
+              : _theme!.bottomNavigationBarTheme.unselectedLabelStyle,
           showUnselectedLabels: true,
+          useLegacyColorScheme: false,
         ));
     //throw UnimplementedError();
     return bottomNavBar;
