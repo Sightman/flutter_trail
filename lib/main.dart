@@ -97,6 +97,13 @@ class _MyHomePageState extends State<MyHomePage> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
+    var navBarItems = const [
+      BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+      BottomNavigationBarItem(icon: Icon(Icons.event), label: "Calendar"),
+      BottomNavigationBarItem(icon: Icon(Icons.dashboard), label: "Dashboard"),
+      BottomNavigationBarItem(icon: Icon(Icons.people), label: "Contacts"),
+      BottomNavigationBarItem(icon: Icon(Icons.more_horiz), label: "More"),
+    ];
     return Scaffold(
       /*
       appBar: AppBar(
@@ -129,7 +136,9 @@ class _MyHomePageState extends State<MyHomePage> {
         //flexibleSpace: Image.network("https://comunidad-empresarial.ediciondigital.mx/wp-content/uploads/slider6/presentacion5c16-9-03.png")
       ),*/
       body: _home,
-      bottomNavigationBar: const BottomNavBar(),
+      bottomNavigationBar: BottomNavBar(
+        items: navBarItems,
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',

@@ -1,9 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_trail/themes/branding.dart';
+import '/themes/branding.dart';
 
-class BottomNavBar extends StatelessWidget {
+class BottomNavBar extends StatefulWidget {
   final Theme? theme;
-  const BottomNavBar({Key? key, this.theme}) : super(key: key);
+  List<BottomNavigationBarItem> items;
+  BottomNavBar({Key? key, this.theme, required this.items}) : super(key: key);
+
+  @override
+  State<StatefulWidget> createState() {
+    return _BottomNavBarState();
+  }
+}
+
+class _BottomNavBarState extends State<BottomNavBar> {
+  List<BottomNavigationBarItem> _items = [];
+  _BottomNavBarState();
+  @override
+  void initState() {
+    super.initState();
+    _items = super.widget.items;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -12,15 +28,7 @@ class BottomNavBar extends StatelessWidget {
             canvasColor: const Color(colorBackgroundDarkDefault),
             primaryColor: const Color(colorPrimaryDarkBrand)),
         child: BottomNavigationBar(
-          items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-            BottomNavigationBarItem(icon: Icon(Icons.event), label: "Calendar"),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.dashboard), label: "Dashboard"),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.people), label: "Contacts"),
-            BottomNavigationBarItem(icon: Icon(Icons.more_horiz), label: "More")
-          ],
+          items: _items,
           showUnselectedLabels: true,
         ));
     //throw UnimplementedError();
