@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ffi';
 
 import 'package:flutter_trail/models/business.dart';
 import 'package:flutter_trail/src/requestor.dart';
@@ -17,7 +16,7 @@ class User {
   String? photoURL =
       'https://cdn4.iconfinder.com/data/icons/glyphs/24/icons_user2-256.png';
   String mobile = '';
-  List<Business>? businesses = [];
+  List<dynamic>? businesses = [];
   bool? isConfirmed = false;
   User(
       {required this.id,
@@ -46,7 +45,7 @@ class User {
       this.photoURL,
       this.businesses,
       required this.mobile,
-      this.isConfirmed});
+      required this.isConfirmed});
   User.__();
 
   factory User.fromJSON(Map<String, dynamic> data) {
@@ -67,9 +66,9 @@ class User {
     var role = data['role'] as int? ?? 0;
     var photoURL = utf8.encode(data['photo-url'] as String? ??
         'https://cdn4.iconfinder.com/data/icons/glyphs/24/icons_user2-256.png');
-    var businesses = data['businesses'] as List<Business>? ?? [];
+    var businesses = data['businesses'] as List<dynamic>? ?? [];
     var mobile = utf8.encode(data['mobile'] as String);
-    var isConfirmed = data['is-confirmed'] as bool;
+    var isConfirmed = data['is-confirmed'] as bool? ?? false;
     return User._(
         id: id,
         firstname: utf8.decode(firstname),
@@ -85,6 +84,22 @@ class User {
         mobile: utf8.decode(mobile),
         isConfirmed: isConfirmed);
   }
+
+  Map<String, dynamic> toJSON() => {
+        "id": id,
+        "firstname": firstname,
+        "middlename": middlename,
+        "lastname": lastname,
+        "tax-id": taxID,
+        "username": username,
+        "email": email,
+        "password": password,
+        "role": role,
+        "photo-url": photoURL,
+        "businesses": businesses,
+        "mobile": mobile,
+        "is-confirmed": isConfirmed
+      };
 
   List<User> mapJSON(List<dynamic> json) {
     return json.map((e) => User.fromJSON(e)).toList();

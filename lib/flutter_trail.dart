@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-import 'menus/bottom_nav_bar.dart';
 import 'screens/welcome.dart';
-import 'themes/branding.dart';
 import 'screens/home.dart';
 
 class FlutterTrail extends StatefulWidget {

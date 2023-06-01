@@ -24,6 +24,9 @@ ThemeData themeDark = ThemeData(
   // is not restarted.
   fontFamily: "M Plus Rounded",
   primarySwatch: Colors.cyan,
+  primaryColor: const Color(colorPrimaryDarkBrand),
+  highlightColor: const Color(colorHighlightDark),
+  buttonTheme: const ButtonThemeData(colorScheme: ColorScheme.dark()),
   colorScheme: const ColorScheme(
       background: Color(colorBackgroundDarkDefault),
       primary: Color(colorPrimaryDarkBrand),
@@ -32,7 +35,7 @@ ThemeData themeDark = ThemeData(
       error: Colors.redAccent,
       surface: Colors.blue,
       onBackground: Color(colorForegroundDarkDefault),
-      onPrimary: Colors.white,
+      onPrimary: Colors.black,
       onSecondary: Colors.white70,
       onError: Colors.redAccent,
       onSurface: Colors.blue),
@@ -59,6 +62,9 @@ ThemeData themeLight = ThemeData(
   // is not restarted.
   fontFamily: "M Plus Rounded",
   primarySwatch: Colors.cyan,
+  primaryColor: const Color(colorPrimaryDarkBrand),
+  highlightColor: const Color(colorHighlightLight),
+  buttonTheme: const ButtonThemeData(colorScheme: ColorScheme.light()),
   colorScheme: const ColorScheme(
       background: Color(colorBackgroundLightDefault),
       primary: Color(colorPrimaryLightBrand),

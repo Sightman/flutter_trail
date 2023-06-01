@@ -106,6 +106,7 @@ flutter:
     - test/reviews.json
     - test/places.json
     - test/slides.json
+    - test/session.json
 fonts:
   - family: M Plus Rounded
     fonts:

@@ -1,16 +1,20 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_trail/menus/bottom_nav_bar.dart';
-import 'package:flutter_trail/themes/branding.dart';
-import 'package:flutter_trail/flutter_trail.dart';
-import 'package:flutter_trail/screens/home.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import '/menus/bottom_nav_bar.dart';
+import '/screens/welcome.dart';
+import '/session_manager.dart';
+import '/themes/branding.dart';
+import '/flutter_trail.dart';
+import '/screens/home.dart';
 
 void main() async {
   String host;
+  bool isLoggedin;
   dotenv;
+  WidgetsFlutterBinding.ensureInitialized();
   if (kIsWeb) {
     await dotenv.load(fileName: 'web/.env');
   } else if (Platform.isLinux) {
@@ -21,16 +25,25 @@ void main() async {
     await dotenv.load(fileName: 'ios/.env');
   }
   host = dotenv.env['HOST']!;
+  isLoggedin = await SessionManager().validateSession();
   runApp(MyApp(
     host: host,
     theme: themeDark,
+    isLoggedin: isLoggedin,
   ));
 }
 
 class MyApp extends StatelessWidget {
   String? host;
   ThemeData? theme;
-  MyApp({Key? key, this.host, this.theme}) : super(key: key);
+  bool isLoggedin;
+  MyApp({Key? key, this.host, this.theme, required this.isLoggedin})
+      : super(key: key);
+
+  void switchScreen(BuildContext context, Widget screen) {
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => screen));
+  }
 
   // This widget is the root of your application.
   @override
@@ -38,7 +51,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Trail',
       theme: theme,
-      home: FlutterTrail(title: 'My Flutter learning path'),
+      home: isLoggedin
+          ? FlutterTrail(title: 'My Flutter learning path')
+          : Welcome(onLogin: switchScreen),
     );
   }
 }

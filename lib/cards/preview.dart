@@ -154,6 +154,6 @@ class _PreviewCardState extends State<PreviewCard> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [stackOverlay, contBottomBar],
         ));
-    return InkWell(onTap: openItem, child: cardPreview);
+    return cardPreview;
   }
 }
