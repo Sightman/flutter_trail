@@ -51,8 +51,10 @@ class PersistentBanner extends StatelessWidget {
         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           contLeading,
           Text(title ?? 'Persistent Banner',
-              style:
-                  const TextStyle(fontSize: 25, fontFamily: 'M PLUS Rounded')),
+              style: const TextStyle(
+                  color: Colors.white70,
+                  fontSize: 25,
+                  fontFamily: 'M PLUS Rounded')),
           contActions
         ]),
         contFlexibleSpace

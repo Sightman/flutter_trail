@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_trail/themes/branding.dart';
+import '/themes/branding.dart';
 
 class NavBanner extends StatefulWidget {
   String? title;

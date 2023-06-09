@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_trail/forms/signup.dart';
-import 'package:flutter_trail/session_manager.dart';
+import '/forms/signup.dart';
+import '/session_manager.dart';
 
 import '../screens/home.dart';
 import '../themes/branding.dart';
@@ -47,7 +47,7 @@ class _LoginState extends State<Login> {
     SessionManager().login(username, email, password);
     if (_onLogin != null) {
       bool isValid = await SessionManager().validateSession();
-      if (isValid) {
+      if (!isValid) {
         _onLogin!(
             context,
             Home(

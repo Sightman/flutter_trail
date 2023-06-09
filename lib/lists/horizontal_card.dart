@@ -51,7 +51,16 @@ class HorizontalCardList extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.end,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(topRightButtonLabel ?? 'All'),
+            Text(topRightButtonLabel ?? 'All',
+                textAlign: TextAlign.right,
+                style: const TextStyle(
+                    color: Colors.black54,
+                    height: 1,
+                    leadingDistribution: TextLeadingDistribution.even,
+                    fontSize: 20,
+                    fontFamily: 'M PLUS Rounded',
+                    fontWeight: FontWeight.w700,
+                    fontStyle: FontStyle.normal)),
             Icon(
               topRightButtonIcon,
               color: topRightButtonBackground,

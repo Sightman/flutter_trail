@@ -7,17 +7,25 @@ import '/models/user.dart';
 class SessionManager {
   static const String _sessionPath = 'test/session.json';
   Future<Map<String, dynamic>> _getSessionData() async {
-    final sessionData = await rootBundle.loadString(_sessionPath);
-    return jsonDecode(sessionData);
+    try {
+      final sessionData = await rootBundle.loadString(_sessionPath);
+      return jsonDecode(sessionData);
+    } catch (e) {
+      return {"exception": e.toString()};
+    }
   }
 
   Future<bool> validateSession() async {
-    final jsonSession = await _getSessionData();
-    User user = User.fromJSON(jsonSession);
-    if (user.username.isNotEmpty && user.password.isNotEmpty) {
-      return true;
+    try {
+      final jsonSession = await _getSessionData();
+      User user = User.fromJSON(jsonSession);
+      if (user.username.isNotEmpty && user.password.isNotEmpty) {
+        return true;
+      }
+      return false;
+    } catch (e) {
+      return false;
     }
-    return false;
   }
 
   void login(String username, String email, String password) async {

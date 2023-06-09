@@ -1,17 +1,16 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutter_trail/cards/avatar.dart';
-import 'package:flutter_trail/lists/avatar.dart';
-import 'package:flutter_trail/themes/branding.dart';
-import 'package:flutter_trail/models/business.dart';
-import 'package:flutter_trail/cards/image.dart';
-import 'package:flutter_trail/lists/horizontal_card.dart';
-import 'package:flutter_trail/models/user.dart';
-import 'package:flutter_trail/menus/persistent_banner.dart';
-import 'package:flutter_trail/cards/preview.dart';
-import 'package:flutter_trail/cards/review.dart';
-import 'package:flutter_trail/lists/review.dart';
+import '/cards/avatar.dart';
+import '/lists/avatar.dart';
+import '/themes/branding.dart';
+import '/models/business.dart';
+import '/cards/image.dart';
+import '/lists/horizontal_card.dart';
+import '/models/user.dart';
+import '/menus/persistent_banner.dart';
+import '/cards/preview.dart';
+import '/cards/review.dart';
+import '/lists/review.dart';
 
 import '../models/review.dart';
 import '../src/requestor.dart';

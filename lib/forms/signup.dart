@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_trail/screens/home.dart';
-import 'package:flutter_trail/themes/branding.dart';
+import '/screens/home.dart';
+import '/themes/branding.dart';
 
 class Signup extends StatefulWidget {
   ThemeData? theme;

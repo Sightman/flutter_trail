@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:flutter_trail/models/business.dart';
-import 'package:flutter_trail/src/requestor.dart';
+import '/models/business.dart';
+import '/src/requestor.dart';
 
 class User {
   int id = 0;
