@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_trail/themes/branding.dart';
+import '/themes/branding.dart';
 
 class HorizontalCardList extends StatelessWidget {
   final double? height;

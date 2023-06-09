@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_trail/themes/branding.dart';
+import '/themes/branding.dart';
 
-class Avatar extends StatelessWidget {
+class AvatarWidget extends StatelessWidget {
   final String? photoURL;
   final String? name;
   final Color? background;
   final Color? foreground;
   final double? imageScale;
-  const Avatar(
+  const AvatarWidget(
       {Key? key,
       this.photoURL = "",
       this.name,

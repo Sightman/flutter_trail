@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import '/themes/branding.dart';
 
-class CardImage extends StatelessWidget {
+class ImageCard extends StatelessWidget {
   ImageProvider? image;
 
-  CardImage({Key? key, this.image}) : super(key: key);
+  ImageCard({Key? key, this.image}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     var contImage = Container(

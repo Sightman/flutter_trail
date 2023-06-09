@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_trail/lists/horizontal_card.dart';
+import '/lists/horizontal_card.dart';
 
 class BusinessCard extends StatelessWidget {
   const BusinessCard({super.key});

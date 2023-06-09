@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:flutter_trail/src/requestor.dart';
+import '/src/requestor.dart';
 
 class Business {
   int id = 0;
@@ -63,6 +63,18 @@ class Business {
         logoURL: utf8.decode(logoURL),
         industry: utf8.decode(industry));
   }
+
+  Map<String, dynamic> toJSON() => {
+        "id": id,
+        "name": name,
+        "brand": brand,
+        "tax-id": taxID,
+        "slogan": slogan,
+        "tag-line": tagLine,
+        "one-liner": oneLiner,
+        "logo-url": logoURL,
+        "industry": industry
+      };
 
   List<Business> mapJSON(List<dynamic> json) {
     return json.map((e) => Business.fromJSON(e)).toList();

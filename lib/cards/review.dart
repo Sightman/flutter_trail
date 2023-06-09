@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_trail/cards/avatar.dart';
-import 'package:flutter_trail/themes/branding.dart';
+import '/cards/avatar.dart';
+import '/themes/branding.dart';
 
 class ReviewWidget extends StatelessWidget {
-  final Avatar? avatar;
+  final AvatarWidget? avatar;
   final String? title;
   final String? comment;
   const ReviewWidget({Key? key, this.avatar, this.title, this.comment})

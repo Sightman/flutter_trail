@@ -62,7 +62,7 @@ class _HomeState extends State<Home> {
               margin: const EdgeInsets.only(top: 180, bottom: 5),
               child: AvatarList(
                 children: [
-                      const Avatar(
+                      const AvatarWidget(
                         photoURL:
                             'https://cdn2.iconfinder.com/data/icons/instagram-40/98/Asset_47-256.png',
                         name: 'Crear',
@@ -70,7 +70,7 @@ class _HomeState extends State<Home> {
                       )
                     ] +
                     data
-                        .map((moment) => Avatar(
+                        .map((moment) => AvatarWidget(
                               photoURL: moment.photoURL,
                               name: moment.username,
                               background: Colors.blueGrey.shade900,
@@ -146,8 +146,8 @@ class _HomeState extends State<Home> {
                 height: 400.0,
                 child: ReviewList(
                     children: data
-                        .map((e) => ReviewWidget(
-                              avatar: Avatar(
+                        .map((e) => Review(
+                              avatar: AvatarWidget(
                                 name: e.fullname,
                                 background: Colors.transparent,
                                 photoURL: e.photoURL,
@@ -187,7 +187,7 @@ class _HomeState extends State<Home> {
                     topRightButtonLabel: '',
                     background: Colors.transparent,
                     children: slides
-                        .map((slide) => CardImage(
+                        .map((slide) => Image(
                             image: NetworkImage(slide['photo-url'] != null
                                 ? slide['photo-url'].toString() == ''
                                     ? "https://unsplash.com/es/fotos/nEwLb1onsDo"
@@ -218,7 +218,7 @@ class _HomeState extends State<Home> {
                   title: '',
                   background: const Color(colorForegroundDarkDefault),
                   children: [
-                        const Avatar(
+                        const AvatarWidget(
                           name: 'Crear',
                           photoURL:
                               'https://cdn2.iconfinder.com/data/icons/instagram-40/98/Asset_47-256.png',
@@ -227,7 +227,7 @@ class _HomeState extends State<Home> {
                         )
                       ] +
                       data
-                          .map((moment) => Avatar(
+                          .map((moment) => AvatarWidget(
                                 photoURL: moment.photoURL,
                                 name: moment.username,
                                 background: Colors.blueGrey.shade900,

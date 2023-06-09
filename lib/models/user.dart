@@ -1,6 +1,4 @@
 import 'dart:convert';
-
-import '/models/business.dart';
 import '/src/requestor.dart';
 
 class User {
