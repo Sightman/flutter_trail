@@ -17,17 +17,17 @@ import '/lists/review.dart';
 import '../models/review.dart';
 import '../src/requestor.dart';
 
-class Home extends StatefulWidget {
+class HomeScreen extends StatefulWidget {
   String? title;
-  Home({Key? key, this.title}) : super(key: key);
+  HomeScreen({Key? key, this.title}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    return _HomeState();
+    return _HomeScreenState();
   }
 }
 
-class _HomeState extends State<Home> {
+class _HomeScreenState extends State<HomeScreen> {
   String? _title;
   String? _host;
   String? _root;
@@ -35,8 +35,7 @@ class _HomeState extends State<Home> {
   late Future<List<dynamic>> _jsonBusinesses;
   late Future<List<dynamic>> _jsonReviews;
   late Future<List<dynamic>> _jsonAds;
-  late Future<List<dynamic>> _jsonSlides;
-  _HomeState();
+  _HomeScreenState();
 
   @override
   void initState() {
@@ -48,7 +47,6 @@ class _HomeState extends State<Home> {
     _jsonBusinesses = Requestor().arrayFromAssets('test/businesses.json');
     _jsonReviews = Requestor().arrayFromAssets('test/reviews.json');
     _jsonAds = Requestor().arrayFromAssets('test/ads.json');
-    _jsonSlides = Requestor().arrayFromAssets('test/slides.json');
   }
 
   @override
@@ -66,7 +64,7 @@ class _HomeState extends State<Home> {
                           image: NetworkImage(e['photo-url'].toString()))))))
               .toList();
           return Container(
-            margin: const EdgeInsets.only(top: 200, bottom: 5),
+            margin: const EdgeInsets.only(bottom: 5),
             height: 250,
             child: CarouselSlider(
                 items: data, options: CarouselOptions(autoPlay: true)),
@@ -135,14 +133,18 @@ class _HomeState extends State<Home> {
                 forwardButtonIcon: Icons.arrow_forward_rounded,
                 background: Colors.blue.shade500,
                 children: data
-                    .map((business) => PreviewCard(
+                    .map((business) => Container(
+                        margin: const EdgeInsets.all(5),
+                        child: PreviewCard(
                           key: Key(business.id.toString()),
                           strCardImage: business.logoURL,
                           strOverlayTitle: business.brand,
                           iconOverlayTopRight: Icons.business,
                           boolOverlayTopRightIcon: true,
                           strBottomBarTitle: business.slogan,
-                        ))
+                          height: 160,
+                          width: 160,
+                        )))
                     .toList(),
               ),
             );
@@ -205,36 +207,6 @@ class _HomeState extends State<Home> {
         contReviewList
       ],
     );
-    var contLstCardSlides = FutureBuilder(
-        future: _jsonSlides,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            var slides = snapshot.data! as List<dynamic>;
-            return SizedBox(
-                height: 350,
-                child: HorizontalCardList(
-                    height: 210,
-                    title: '',
-                    topRightButtonLabel: '',
-                    background: Colors.transparent,
-                    children: slides
-                        .map((slide) => ImageCard(
-                            image: NetworkImage(slide['photo-url'] != null
-                                ? slide['photo-url'].toString() == ''
-                                    ? "https://unsplash.com/es/fotos/nEwLb1onsDo"
-                                    : slide['photo-url'].toString()
-                                : "https://imgur.com/8m1tosq")))
-                        .toList()));
-          } else if (snapshot.hasError) {
-            return const Center(
-              child: Text("Some data could't be retrieved"),
-            );
-          } else {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-        });
     var appBar = FutureBuilder<List<dynamic>>(
         future: _jsonUsers,
         builder: (context, snapshot) {
@@ -291,8 +263,6 @@ class _HomeState extends State<Home> {
       appBar,
       //contLstCardSlides,
     ]);
-    return Scaffold(
-      body: stackHome,
-    );
+    return colMainMenu;
   }
 }

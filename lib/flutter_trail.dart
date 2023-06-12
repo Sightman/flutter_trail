@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_trail/menus/persistent_banner.dart';
+import 'package:flutter_trail/screens/market.dart';
+import 'package:flutter_trail/screens/wallet.dart';
 
 import 'menus/bottom_nav_bar.dart';
-import 'screens/welcome.dart';
 import 'screens/home.dart';
 import 'themes/branding.dart';
 
@@ -20,7 +22,7 @@ class _FlutterTrail extends State<FlutterTrail> {
   String? _title;
   String? _host;
   List<Widget> _lstWidgets = [];
-  int widgetIndex = 0;
+  int widgetIndex = 2;
   _FlutterTrail();
   Widget _search() {
     return const SnackBar(
@@ -33,7 +35,27 @@ class _FlutterTrail extends State<FlutterTrail> {
     super.initState();
     _title = super.widget.title;
     _host = dotenv.env['HOST'];
-    _lstWidgets = [Home(title: _title)];
+    _lstWidgets = [
+      MarketScreen(
+        collection: "stations",
+      ),
+      WalletScreen(),
+      HomeScreen()
+    ];
+  }
+
+  void switchScreen(BuildContext context, int screen) {
+    setState(() {
+      widgetIndex = screen;
+      Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: (context) => _lstWidgets[widgetIndex]));
+    });
+  }
+
+  void switchTab(int index) {
+    setState(() {
+      widgetIndex = index;
+    });
   }
 
   @override
@@ -47,40 +69,40 @@ class _FlutterTrail extends State<FlutterTrail> {
       const BottomNavigationBarItem(icon: Icon(Icons.more_horiz), label: "More")
     ];
     return Scaffold(
-      /*
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        leading: Image.network(
-          "https://my.alvyss.com/api/v1/cloudron/avatar?2395601373707481",
-          height: 50,
-          width: 50,
+      appBar: PreferredSize(
+        preferredSize: Size(MediaQuery.sizeOf(context).width, 150),
+        child: PersistentBanner(
+          title: _title,
+          leading: const Image(image: NetworkImage(imgLogoBrand)),
+          actions: [
+            Container(
+              padding: const EdgeInsets.all(2),
+              height: 30,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.all(Radius.circular(5)),
+                  color: themeDark.primaryColor),
+              child: Text(
+                "$widgetIndex pt",
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 15,
+                ),
+              ),
+            ),
+            Icon(
+              Icons.diamond_sharp,
+              color: themeDark.primaryColor,
+              size: 40,
+            )
+          ],
         ),
-        //const Icon(Icons.arrow_back, size: 30),
-        title: Text(
-          widget.title,
-          textAlign: TextAlign.center,
-        ),
-        centerTitle: true,
-        backgroundColor: Colors.blueGrey,
-        foregroundColor: const Color(colorPrimaryDarkBrand),
-        actions: const [
-          Icon(
-            Icons.notifications,
-            size: 30,
-          ),
-          Icon(
-            Icons.person,
-            size: 30,
-          )
-        ],
-        titleSpacing: 50,
-        //flexibleSpace: Image.network("https://comunidad-empresarial.ediciondigital.mx/wp-content/uploads/slider6/presentacion5c16-9-03.png")
-      ),*/
+      ),
       body: _lstWidgets[widgetIndex],
       bottomNavigationBar: BottomNavBar(
         items: navBarItems,
         selectedItem: 2,
+        switchTab: switchTab,
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _search,

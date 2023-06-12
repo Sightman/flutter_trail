@@ -49,7 +49,7 @@ class _LoginState extends State<Login> {
     if (!isValid && _onLogin != null) {
       _onLogin!(
           context,
-          Home(
+          HomeScreen(
             title: "Welcome, $username!",
           ));
       dispose();

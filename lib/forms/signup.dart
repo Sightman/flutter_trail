@@ -29,7 +29,7 @@ class _SignupState extends State<Signup> {
   void initState() {
     super.initState();
     _theme = super.widget.theme ?? themeDark;
-    _actions = [Home()];
+    _actions = [HomeScreen()];
   }
 
   @override

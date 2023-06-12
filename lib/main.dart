@@ -53,7 +53,7 @@ class MyApp extends StatelessWidget {
       theme: theme,
       home: isLoggedin
           ? FlutterTrail(title: 'My Flutter learning path')
-          : Welcome(onLogin: switchScreen),
+          : WelcomeScreen(onLogin: switchScreen),
     );
   }
 }
@@ -90,7 +90,7 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
     _title = super.widget.title;
     _host = dotenv.env['HOST'];
-    _home = Home(title: _title);
+    _home = HomeScreen(title: _title);
   }
 
   void _incrementCounter() {

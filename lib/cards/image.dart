@@ -10,7 +10,7 @@ class ImageCard extends StatelessWidget {
     var contImage = Container(
       height: 150,
       width: 175,
-      margin: const EdgeInsets.only(top: 65.0, left: 10.0, right: 10.0),
+      margin: const EdgeInsets.symmetric(horizontal: 10.0),
       decoration: BoxDecoration(
           borderRadius: const BorderRadius.all(Radius.circular(10)),
           shape: BoxShape.rectangle,

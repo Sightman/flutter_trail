@@ -3,9 +3,15 @@ import '/themes/branding.dart';
 
 class BottomNavBar extends StatefulWidget {
   ThemeData? theme;
-  int? selectedItem = -1;
+  int? selectedItem;
   List<BottomNavigationBarItem> items;
-  BottomNavBar({Key? key, this.theme, this.selectedItem, required this.items})
+  Function? switchTab;
+  BottomNavBar(
+      {Key? key,
+      this.theme,
+      this.selectedItem,
+      required this.items,
+      this.switchTab})
       : super(key: key);
 
   @override
@@ -15,25 +21,30 @@ class BottomNavBar extends StatefulWidget {
 }
 
 class _BottomNavBarState extends State<BottomNavBar> {
-  int? _widget;
   int? _selectedItem;
   ThemeData? _theme;
   List<BottomNavigationBarItem> _items = [];
+  Function? _switchTab;
   _BottomNavBarState();
   @override
   void initState() {
     super.initState();
-    _widget = 0;
-    _selectedItem = super.widget.selectedItem ?? -1;
+    _selectedItem = super.widget.selectedItem;
     _theme = super.widget.theme ?? themeDark;
     _items = super.widget.items;
+    _switchTab = super.widget.switchTab;
   }
 
-  void _onTap(item) {
-    _widget = item;
-    SnackBar(
-      content: Text("$_widget"),
-    );
+  void _onTap(int item) {
+    setState(() {
+      _selectedItem = item;
+      if (_switchTab != null) {
+        _switchTab!(_selectedItem);
+      } else {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text("$_selectedItem")));
+      }
+    });
   }
 
   @override
@@ -46,10 +57,10 @@ class _BottomNavBarState extends State<BottomNavBar> {
           items: _items,
           currentIndex: _selectedItem ?? 0,
           onTap: _onTap,
-          selectedIconTheme: _selectedItem! > 0
+          selectedIconTheme: _selectedItem != null
               ? _theme!.bottomNavigationBarTheme.selectedIconTheme
               : _theme!.bottomNavigationBarTheme.unselectedIconTheme,
-          selectedLabelStyle: _selectedItem! > 0
+          selectedLabelStyle: _selectedItem != null
               ? _theme!.bottomNavigationBarTheme.selectedLabelStyle
               : _theme!.bottomNavigationBarTheme.unselectedLabelStyle,
           showUnselectedLabels: true,

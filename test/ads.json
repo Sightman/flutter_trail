@@ -1,0 +1,17 @@
+[
+    {
+        "id": 1,
+        "owner": 1,
+        "photo-url": "https://cdn.leonardo.ai/users/11f55013-a852-41dc-8f77-fa6af6fd814a/generations/05d3b73d-c4d9-4dfc-ac49-16c3929229c5/Backroomsv1_Home_screen_for_a_points_of_reward_multiplatform_a_1.jpg"
+    },
+    {
+        "id": 2,
+        "owner": 1,
+        "photo-url": "https://cdn.leonardo.ai/users/11f55013-a852-41dc-8f77-fa6af6fd814a/generations/d3a83874-6780-45bb-8f18-f8f2259d83f9/ecommerce_landing_page_Home_screen_for_a_points_of_reward_mult_0.jpg"
+    },
+    {
+        "id": 2,
+        "owner": 1,
+        "photo-url": "https://cdn.leonardo.ai/users/11f55013-a852-41dc-8f77-fa6af6fd814a/generations/d3a83874-6780-45bb-8f18-f8f2259d83f9/ecommerce_landing_page_Home_screen_for_a_points_of_reward_mult_1.jpg"
+    }
+]

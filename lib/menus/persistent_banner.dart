@@ -47,7 +47,7 @@ class PersistentBanner extends StatelessWidget {
               end: FractionalOffset(1.0, 0.6),
               stops: [0.0, 0.6],
               tileMode: TileMode.clamp)),
-      child: Column(mainAxisAlignment: MainAxisAlignment.end, children: [
+      child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           contLeading,
           Text(title ?? 'Persistent Banner',

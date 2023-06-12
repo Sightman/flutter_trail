@@ -7,22 +7,22 @@ import '../menus/bottom_nav_bar.dart';
 import '../themes/branding.dart';
 import 'home.dart';
 
-class Welcome extends StatefulWidget {
+class WelcomeScreen extends StatefulWidget {
   String? title;
   Function? onLogin;
-  Welcome({super.key, this.title, this.onLogin});
+  WelcomeScreen({super.key, this.title, this.onLogin});
 
   @override
   State<StatefulWidget> createState() {
-    return _WelcomeState();
+    return _WelcomeScreenState();
   }
 }
 
-class _WelcomeState extends State<Welcome> {
+class _WelcomeScreenState extends State<WelcomeScreen> {
   String? _title;
   late Future<List<dynamic>> _jsonSlides;
   Function? _onLogin;
-  _WelcomeState();
+  _WelcomeScreenState();
   @override
   void initState() {
     super.initState();
