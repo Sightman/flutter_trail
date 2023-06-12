@@ -45,19 +45,17 @@ class _LoginState extends State<Login> {
     String email = _ctrlEmail.text;
     String password = _ctrlPassword.text;
     SessionManager().login(username, email, password);
-    if (_onLogin != null) {
-      bool isValid = await SessionManager().validateSession();
-      if (!isValid) {
-        _onLogin!(
-            context,
-            Home(
-              title: "Welcome, $username!",
-            ));
-        dispose();
-      } else {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text("Invalid credentials")));
-      }
+    bool isValid = await SessionManager().validateSession();
+    if (!isValid && _onLogin != null) {
+      _onLogin!(
+          context,
+          Home(
+            title: "Welcome, $username!",
+          ));
+      dispose();
+    } else {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("Invalid credentials")));
     }
   }
 

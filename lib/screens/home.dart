@@ -1,5 +1,7 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_trail/menus/bottom_nav_bar.dart';
 import '/cards/avatar.dart';
 import '/lists/avatar.dart';
 import '/themes/branding.dart';
@@ -32,7 +34,7 @@ class _HomeState extends State<Home> {
   late Future<List<dynamic>> _jsonUsers;
   late Future<List<dynamic>> _jsonBusinesses;
   late Future<List<dynamic>> _jsonReviews;
-  late Future<List<dynamic>> _jsonPlaces;
+  late Future<List<dynamic>> _jsonAds;
   late Future<List<dynamic>> _jsonSlides;
   _HomeState();
 
@@ -45,13 +47,41 @@ class _HomeState extends State<Home> {
     _jsonUsers = Requestor().arrayFromAssets('test/users.json');
     _jsonBusinesses = Requestor().arrayFromAssets('test/businesses.json');
     _jsonReviews = Requestor().arrayFromAssets('test/reviews.json');
-    _jsonPlaces = Requestor().arrayFromAssets('test/places.json');
+    _jsonAds = Requestor().arrayFromAssets('test/ads.json');
     _jsonSlides = Requestor().arrayFromAssets('test/slides.json');
   }
 
   @override
   Widget build(BuildContext context) {
-    //getJSON('test/users.json');
+    var contAdsSlider = FutureBuilder<List<dynamic>>(
+      future: _jsonAds,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          final List<Container> data = snapshot.data!
+              .map(((e) => Container(
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: NetworkImage(e['photo-url'].toString()))))))
+              .toList();
+          return Container(
+            margin: const EdgeInsets.only(top: 200, bottom: 5),
+            height: 250,
+            child: CarouselSlider(
+                items: data, options: CarouselOptions(autoPlay: true)),
+          );
+        } else if (snapshot.hasError) {
+          return const Center(
+            child: Text("Some data couldn't be retrieved."),
+          );
+        } else {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+      },
+    );
     var contMomentsMenu = FutureBuilder<List<dynamic>>(
         future: _jsonUsers,
         builder: (context, snapshot) {
@@ -59,7 +89,7 @@ class _HomeState extends State<Home> {
             final List<User> data = User.static().mapJSON(snapshot.data!);
             return Container(
               color: Colors.blueGrey,
-              margin: const EdgeInsets.only(top: 180, bottom: 5),
+              margin: const EdgeInsets.only(top: 5, bottom: 5),
               child: AvatarList(
                 children: [
                       const AvatarWidget(
@@ -146,7 +176,7 @@ class _HomeState extends State<Home> {
                 height: 400.0,
                 child: ReviewList(
                     children: data
-                        .map((e) => Review(
+                        .map((e) => ReviewWidget(
                               avatar: AvatarWidget(
                                 name: e.fullname,
                                 background: Colors.transparent,
@@ -168,6 +198,7 @@ class _HomeState extends State<Home> {
         });
     var colMainMenu = ListView(
       children: [
+        contAdsSlider,
         contMomentsMenu,
         contPartnersMenu,
         contMembersMenu,
@@ -187,7 +218,7 @@ class _HomeState extends State<Home> {
                     topRightButtonLabel: '',
                     background: Colors.transparent,
                     children: slides
-                        .map((slide) => Image(
+                        .map((slide) => ImageCard(
                             image: NetworkImage(slide['photo-url'] != null
                                 ? slide['photo-url'].toString() == ''
                                     ? "https://unsplash.com/es/fotos/nEwLb1onsDo"
@@ -204,60 +235,64 @@ class _HomeState extends State<Home> {
             );
           }
         });
-    return Stack(children: [
-      colMainMenu,
-      FutureBuilder<List<dynamic>>(
-          future: _jsonUsers,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              List<User> data = User.static().mapJSON(snapshot.data!);
-              return PersistentBanner(
-                title: _title,
-                leading: const Image(image: NetworkImage(imgLogoBrand)),
-                flexibleSpace: AvatarList(
-                  title: '',
-                  background: const Color(colorForegroundDarkDefault),
-                  children: [
-                        const AvatarWidget(
-                          name: 'Crear',
-                          photoURL:
-                              'https://cdn2.iconfinder.com/data/icons/instagram-40/98/Asset_47-256.png',
-                          background: Color(0x50ffffff),
-                          foreground: Colors.black,
-                        )
-                      ] +
-                      data
-                          .map((moment) => AvatarWidget(
-                                photoURL: moment.photoURL,
-                                name: moment.username,
-                                background: Colors.blueGrey.shade900,
-                              ))
-                          .toList(),
+    var appBar = FutureBuilder<List<dynamic>>(
+        future: _jsonUsers,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            List<User> data = User.static().mapJSON(snapshot.data!);
+            return PersistentBanner(
+              title: _title,
+              leading: const Image(image: NetworkImage(imgLogoBrand)),
+              flexibleSpace: AvatarList(
+                title: '',
+                background: const Color(colorForegroundDarkDefault),
+                children: [
+                      const AvatarWidget(
+                        name: 'Crear',
+                        photoURL:
+                            'https://cdn2.iconfinder.com/data/icons/instagram-40/98/Asset_47-256.png',
+                        background: Color(0x50ffffff),
+                        foreground: Colors.black,
+                      )
+                    ] +
+                    data
+                        .map((moment) => AvatarWidget(
+                              photoURL: moment.photoURL,
+                              name: moment.username,
+                              background: Colors.blueGrey.shade900,
+                            ))
+                        .toList(),
+              ),
+              actions: const [
+                Icon(
+                  Icons.notifications_rounded,
+                  color: Color(colorPrimaryDarkBrand),
+                  size: 40,
                 ),
-                actions: const [
-                  Icon(
-                    Icons.notifications_rounded,
-                    color: Color(colorPrimaryDarkBrand),
-                    size: 40,
-                  ),
-                  Icon(
-                    Icons.account_circle_rounded,
-                    color: Color(colorPrimaryDarkBrand),
-                    size: 40,
-                  )
-                ],
-              );
-            } else if (snapshot.hasError) {
-              return const Center(
-                child: Text("Some data couldn't be retrieved."),
-              );
-            } else {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-          }),
-      contLstCardSlides,
+                Icon(
+                  Icons.account_circle_rounded,
+                  color: Color(colorPrimaryDarkBrand),
+                  size: 40,
+                )
+              ],
+            );
+          } else if (snapshot.hasError) {
+            return const Center(
+              child: Text("Some data couldn't be retrieved."),
+            );
+          } else {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        });
+    var stackHome = Stack(children: [
+      colMainMenu,
+      appBar,
+      //contLstCardSlides,
     ]);
+    return Scaffold(
+      body: stackHome,
+    );
   }
 }

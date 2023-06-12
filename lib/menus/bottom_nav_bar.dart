@@ -44,6 +44,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
             primaryColor: const Color(colorPrimaryDarkBrand)),
         child: BottomNavigationBar(
           items: _items,
+          currentIndex: _selectedItem ?? 0,
           onTap: _onTap,
           selectedIconTheme: _selectedItem! > 0
               ? _theme!.bottomNavigationBarTheme.selectedIconTheme
