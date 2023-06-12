@@ -52,7 +52,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Trail',
       theme: theme,
       home: isLoggedin
-          ? FlutterTrail(title: 'My Flutter learning path')
+          ? FlutterTrail(title: 'The trail I code')
           : WelcomeScreen(onLogin: switchScreen),
     );
   }

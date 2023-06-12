@@ -2,6 +2,13 @@
     {
         "id": 1,
         "name": "Gas",
-        "price": 20.75
+        "price": 20.75,
+        "volume-unit": "l"
+    },
+    {
+        "id": 2,
+        "name": "Oil",
+        "price": 150.0,
+        "volume-unit": "l"
     }
 ]

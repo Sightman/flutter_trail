@@ -87,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
             final List<User> data = User.static().mapJSON(snapshot.data!);
             return Container(
               color: Colors.blueGrey,
-              margin: const EdgeInsets.only(top: 5, bottom: 5),
+              margin: const EdgeInsets.only(bottom: 5),
               child: AvatarList(
                 children: [
                       const AvatarWidget(

@@ -35,8 +35,9 @@ class PersistentBanner extends StatelessWidget {
       child: Row(mainAxisAlignment: MainAxisAlignment.end, children: actions),
     );
     return Container(
+      padding: const EdgeInsets.only(top: 30),
       alignment: const Alignment(-0.9, -0.6),
-      height: flexibleSpace != null ? 200.0 : 60,
+      height: flexibleSpace != null ? 230.0 : 90,
       decoration: const BoxDecoration(
           gradient: LinearGradient(
               colors: [

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_trail/menus/persistent_banner.dart';
 import 'package:flutter_trail/screens/market.dart';
+import 'package:flutter_trail/screens/more.dart';
+import 'package:flutter_trail/screens/profile.dart';
 import 'package:flutter_trail/screens/wallet.dart';
 
 import 'menus/bottom_nav_bar.dart';
@@ -24,11 +26,6 @@ class _FlutterTrail extends State<FlutterTrail> {
   List<Widget> _lstWidgets = [];
   int widgetIndex = 2;
   _FlutterTrail();
-  Widget _search() {
-    return const SnackBar(
-      content: Text("Buscar: "),
-    );
-  }
 
   @override
   void initState() {
@@ -38,17 +35,18 @@ class _FlutterTrail extends State<FlutterTrail> {
     _lstWidgets = [
       MarketScreen(
         collection: "stations",
+        switchScreen: switchScreen,
       ),
       WalletScreen(),
-      HomeScreen()
+      HomeScreen(),
+      ProfileScreen(),
+      MoreScreen()
     ];
   }
 
-  void switchScreen(BuildContext context, int screen) {
+  void switchScreen(BuildContext context, Widget screen) {
     setState(() {
-      widgetIndex = screen;
-      Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (context) => _lstWidgets[widgetIndex]));
+      Navigator.push(context, MaterialPageRoute(builder: (context) => screen));
     });
   }
 
@@ -58,6 +56,11 @@ class _FlutterTrail extends State<FlutterTrail> {
     });
   }
 
+  void _scan() {
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text("QR Scanner")));
+  }
+
   @override
   Widget build(BuildContext context) {
     var navBarItems = [
@@ -65,7 +68,7 @@ class _FlutterTrail extends State<FlutterTrail> {
           icon: Icon(Icons.local_gas_station), label: "Charge"),
       const BottomNavigationBarItem(icon: Icon(Icons.wallet), label: "Wallet"),
       const BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-      const BottomNavigationBarItem(icon: Icon(Icons.person), label: "Person"),
+      const BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
       const BottomNavigationBarItem(icon: Icon(Icons.more_horiz), label: "More")
     ];
     return Scaffold(
@@ -76,6 +79,7 @@ class _FlutterTrail extends State<FlutterTrail> {
           leading: const Image(image: NetworkImage(imgLogoBrand)),
           actions: [
             Container(
+              margin: const EdgeInsets.only(top: 50),
               padding: const EdgeInsets.all(2),
               height: 30,
               alignment: Alignment.center,
@@ -105,9 +109,10 @@ class _FlutterTrail extends State<FlutterTrail> {
         switchTab: switchTab,
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _search,
-        tooltip: 'Search',
-        child: const Icon(Icons.search, color: Color(colorPrimaryDarkBrand)),
+        onPressed: _scan,
+        tooltip: 'Scan',
+        child: const Icon(Icons.qr_code_scanner_rounded,
+            color: Color(colorPrimaryDarkBrand)),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }

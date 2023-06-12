@@ -14,36 +14,42 @@ class Product {
   double? length = 0;
   double? volume = 0;
   double? price = 0;
+  String? currency = "MXN";
   String? sku = "";
   double pointsRewarded = 0;
+  String? photoURL;
   Product(
       {required this.id,
       required this.name,
-      model,
-      brand,
-      dimensionUnit,
-      volumeUnit,
-      width,
-      height,
-      length,
-      volume,
-      price,
-      sku,
-      required this.pointsRewarded});
+      this.model,
+      this.brand,
+      this.dimensionUnit,
+      this.volumeUnit,
+      this.width,
+      this.height,
+      this.length,
+      this.volume,
+      this.price,
+      this.currency,
+      this.sku,
+      required this.pointsRewarded,
+      this.photoURL});
   Product._(
       {required this.id,
       required this.name,
-      model,
-      brand,
-      dimensionUnit,
-      volumeUnit,
-      width,
-      height,
-      length,
-      volume,
-      price,
-      sku,
-      required this.pointsRewarded});
+      this.model,
+      this.brand,
+      this.dimensionUnit,
+      this.volumeUnit,
+      this.width,
+      this.height,
+      this.length,
+      this.volume,
+      this.price,
+      this.currency,
+      this.sku,
+      required this.pointsRewarded,
+      this.photoURL});
   Product.__();
   factory Product.fromJSON(Map<String, dynamic> data) {
     var id = data['id'] as int;
@@ -63,8 +69,10 @@ class Product {
     var length = data['length'] as double? ?? 0;
     var volume = data['volume'] as double? ?? 0;
     var price = data['price'] as double? ?? 0;
+    var currency = data['currency'] as String? ?? "MXN";
     var sku = utf8.encode(data['sku'] as String? ?? "");
     var pointsRewarded = data['points-rewarded'] as double? ?? 0;
+    var photoURL = utf8.encode(data['photo-url'] as String? ?? "");
     return Product._(
         id: id,
         name: utf8.decode(name),
@@ -77,8 +85,10 @@ class Product {
         length: length,
         volume: volume,
         price: price,
+        currency: currency,
         sku: utf8.decode(sku),
-        pointsRewarded: pointsRewarded);
+        pointsRewarded: pointsRewarded,
+        photoURL: utf8.decode(photoURL));
   }
 
   Map<String, dynamic> toJSON() => {
@@ -93,8 +103,10 @@ class Product {
         "length": length,
         "volume": volume,
         "price": price,
+        "currency": currency,
         "sku": sku,
-        "points-rewarded": pointsRewarded
+        "points-rewarded": pointsRewarded,
+        "photo-url": photoURL
       };
   List<Product> mapJSON(List<dynamic> json) {
     return json.map((e) => Product.fromJSON(e)).toList();

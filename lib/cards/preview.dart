@@ -14,7 +14,8 @@ class PreviewCard extends StatefulWidget {
   final double? dblImageScale;
   final double? width;
   final double? height;
-  const PreviewCard(
+  VoidCallback? onTap;
+  PreviewCard(
       {Key? key,
       this.strOverlayTitle,
       this.strCardImage,
@@ -26,8 +27,9 @@ class PreviewCard extends StatefulWidget {
       this.strBottomBarTitle,
       this.intBottomBarColor = 0xffffffff,
       this.dblImageScale = 1.0,
-      this.height,
-      this.width})
+      this.height = 160,
+      this.width = 160,
+      this.onTap})
       : super(key: key);
 
   @override
@@ -37,7 +39,7 @@ class PreviewCard extends StatefulWidget {
 }
 
 class _PreviewCardState extends State<PreviewCard> {
-  Key? _key;
+  Key _key = Key("preview-card");
   String? _strCardImage = imgLogoBrand;
   String? _strOverlayTitle = "Preview card";
   IconData? _iconOverlayTopLeft = Icons.info;
@@ -50,12 +52,14 @@ class _PreviewCardState extends State<PreviewCard> {
   double? _dblImageScale = 1.0;
   double _height = 160;
   double _width = 160;
+  VoidCallback? _onTap;
+  bool _isTapped = false;
   _PreviewCardState();
 
   @override
   void initState() {
     super.initState();
-    _key = widget.key;
+    _key = widget.key ?? _key;
     _strCardImage = widget.strCardImage ?? _strCardImage;
     _strOverlayTitle = widget.strOverlayTitle;
     _iconOverlayTopLeft = widget.iconOverlayTopLeft;
@@ -68,12 +72,19 @@ class _PreviewCardState extends State<PreviewCard> {
     _dblImageScale = widget.dblImageScale;
     _height = super.widget.height ?? _height;
     _width = super.widget.width ?? _width;
+    _onTap = super.widget.onTap;
   }
 
-  void openItem() {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        backgroundColor: const Color(colorBackgroundLightDefault),
-        content: Text(_strOverlayTitle ?? "My Flutter trail")));
+  void onTap(BuildContext context, Key key) {
+    if (_onTap != null) {
+      //_onTap!(context, key);
+      //dispose();
+    }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
@@ -167,6 +178,23 @@ class _PreviewCardState extends State<PreviewCard> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [stackOverlay, contBottomBar],
         ));
-    return cardPreview;
+    return GestureDetector(
+        onTapDown: (details) {
+          setState(() {
+            _isTapped = true;
+          });
+        },
+        onTapCancel: () {
+          setState(() {
+            _isTapped = false;
+          });
+        },
+        onTapUp: (details) {
+          setState(() {
+            _isTapped = false;
+          });
+        },
+        onTap: _onTap,
+        child: cardPreview);
   }
 }
