@@ -36,7 +36,7 @@ class PersistentBanner extends StatelessWidget {
     );
     return Container(
       alignment: const Alignment(-0.9, -0.6),
-      height: 200.0,
+      height: flexibleSpace != null ? 200.0 : 60,
       decoration: const BoxDecoration(
           gradient: LinearGradient(
               colors: [
