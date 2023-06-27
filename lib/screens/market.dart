@@ -47,7 +47,7 @@ class _MarketScreenState extends State<MarketScreen> {
       _switchScreen!(
           context,
           ProductScreen(
-            product: item,
+            product: _selectedItem,
             switchScreen: () {
               Navigator.pop(context);
             },

@@ -33,6 +33,9 @@ class _BusinessWidgetState extends State<BusinessWidget> {
 
   @override
   Widget build(BuildContext context) {
+    var contLogo = Container(
+      alignment: Alignment.topLeft,
+    );
     var scaffold = Scaffold(
         body: FutureBuilder<Business>(
             future: _business,

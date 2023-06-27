@@ -36,8 +36,11 @@ class _ProductScreenState extends State<ProductScreen> {
       decoration: BoxDecoration(
           borderRadius: const BorderRadius.only(
               bottomLeft: Radius.circular(5), topRight: Radius.circular(5)),
+          boxShadow: const [BoxShadow(color: Colors.black26)],
           image: DecorationImage(
-              image: NetworkImage(_product!.photoURL ?? imgLogoBrand))),
+              image: NetworkImage(_product!.photoURL != ""
+                  ? _product!.photoURL!
+                  : imgLogoBrand))),
     );
     var colInfo = Column(
       children: [
@@ -49,7 +52,7 @@ class _ProductScreenState extends State<ProductScreen> {
               style: stlInfo,
             ),
             Text(
-              "\$${_product!.price}",
+              "\$${_product!.price} / ${_product!.volumeUnit}",
               style: stlInfo,
             )
           ],
