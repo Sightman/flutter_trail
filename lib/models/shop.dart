@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import '../src/requestor.dart';
+import 'business.dart';
 
 class Shop {
   int id = 0;
@@ -14,6 +15,7 @@ class Shop {
   String? zipcode = "";
   String? mapLink = "";
   String? photoURL = "";
+  Business? holder;
   Shop(
       {required this.id,
       required this.name,
@@ -26,7 +28,8 @@ class Shop {
       zipcode,
       mapLink,
       photoURL =
-          "https://cdn.leonardo.ai/users/11f55013-a852-41dc-8f77-fa6af6fd814a/generations/f353d4e4-041b-4a6c-901c-c5e8c4690558/Leonardo_Select_A_white_mexican_trucker_dinning_two_tortas_aho_0.jpg"});
+          "https://cdn.leonardo.ai/users/11f55013-a852-41dc-8f77-fa6af6fd814a/generations/f353d4e4-041b-4a6c-901c-c5e8c4690558/Leonardo_Select_A_white_mexican_trucker_dinning_two_tortas_aho_0.jpg",
+      required this.holder});
   Shop._(
       {required this.id,
       required this.name,
@@ -38,7 +41,8 @@ class Shop {
       country,
       zipcode,
       mapLink,
-      photoURL});
+      photoURL,
+      required this.holder});
   Shop.__();
   factory Shop.fromJSON(Map<String, dynamic> data) {
     var id = data['id'] as int;
@@ -59,6 +63,7 @@ class Shop {
     var mapLink = utf8.encode(data['map-link'] as String? ?? "");
     var photoURL = utf8.encode(data['photo-url'] as String? ??
         "https://cdn.leonardo.ai/users/11f55013-a852-41dc-8f77-fa6af6fd814a/generations/f353d4e4-041b-4a6c-901c-c5e8c4690558/Leonardo_Select_A_white_mexican_trucker_dinning_two_tortas_aho_0.jpg");
+    var holder = Business.fromJSON(data['holder'] ?? {});
     return Shop._(
         id: id,
         name: utf8.decode(name),
@@ -70,7 +75,8 @@ class Shop {
         country: utf8.decode(country),
         zipcode: utf8.decode(zipcode),
         mapLink: utf8.decode(mapLink),
-        photoURL: utf8.decode(photoURL));
+        photoURL: utf8.decode(photoURL),
+        holder: holder);
   }
 
   Map<String, dynamic> toJSON() => {
@@ -84,7 +90,8 @@ class Shop {
         "country": country,
         "zipcode": zipcode,
         "map-link": mapLink,
-        "photo-url": photoURL
+        "photo-url": photoURL,
+        "holder": holder!.toJSON()
       };
 
   List<Shop> mapJSON(List<dynamic> json) {
@@ -92,8 +99,12 @@ class Shop {
   }
 
   Future<List<Shop>> fetchAssets(String filename) async {
-    List<dynamic> json = await Requestor().arrayFromAssets(filename);
-    return json.map((e) => Shop.fromJSON(e)).toList();
+    try {
+      List<dynamic> json = await Requestor().arrayFromAssets(filename);
+      return json.map((e) => Shop.fromJSON(e)).toList();
+    } catch (e) {
+      return [];
+    }
   }
 
   factory Shop.static() {

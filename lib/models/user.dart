@@ -107,8 +107,12 @@ class User {
   }
 
   Future<List<User>> fetchAssets(String filename) async {
-    List<dynamic> json = await Requestor().arrayFromAssets(filename);
-    return json.map((e) => User.fromJSON(e)).toList();
+    try {
+      List<dynamic> json = await Requestor().arrayFromAssets(filename);
+      return json.map((e) => User.fromJSON(e)).toList();
+    } catch (e) {
+      return [];
+    }
   }
 
   factory User.static() {

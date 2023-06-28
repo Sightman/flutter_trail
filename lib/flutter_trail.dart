@@ -4,6 +4,7 @@ import 'package:flutter_trail/forms/new_business.dart';
 import 'package:flutter_trail/menus/persistent_banner.dart';
 import 'package:flutter_trail/models/user.dart';
 import 'package:flutter_trail/screens/business.dart';
+import 'package:flutter_trail/screens/dashboard.dart';
 import 'package:flutter_trail/screens/market.dart';
 import 'package:flutter_trail/screens/more.dart';
 import 'package:flutter_trail/screens/profile.dart';
@@ -51,11 +52,13 @@ class _FlutterTrail extends State<FlutterTrail> {
             MoreScreen()
           ]
         : [
-            HomeScreen(),
-            ProfileScreen(),
             BusinessScreen(
               owner: _user,
               linkScreen: linkScreen,
+            ),
+            ProfileScreen(),
+            DashboardScreen(
+              owner: _user!,
             ),
             ProfileScreen(),
             MoreScreen()

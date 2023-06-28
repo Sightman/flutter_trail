@@ -57,7 +57,7 @@ class Business {
     var logoURL = utf8.encode(data['logo-url'] as String? ??
         'https://my.alvyss.com/api/v1/cloudron/avatar?2395601373707481');
     var industry = utf8.encode(data['industry'] as String? ?? '');
-    var owner = User.fromJSON(data['owner']);
+    var owner = User.fromJSON(data['owner'] ?? {});
     return Business._(
         id: id,
         name: utf8.decode(name),
@@ -89,8 +89,12 @@ class Business {
   }
 
   Future<List<Business>> fetchAssets(String filename) async {
-    List<dynamic> json = await Requestor().arrayFromAssets(filename);
-    return json.map((e) => Business.fromJSON(e)).toList();
+    try {
+      List<dynamic> json = await Requestor().arrayFromAssets(filename);
+      return json.map((e) => Business.fromJSON(e)).toList();
+    } catch (e) {
+      return [];
+    }
   }
 
   factory Business.static() {

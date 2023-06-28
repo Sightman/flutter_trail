@@ -7,19 +7,18 @@ import 'package:flutter_trail/themes/branding.dart';
 
 import '../models/user.dart';
 
-class NewBusinessForm extends StatefulWidget {
+class NewRewardForm extends StatefulWidget {
   ThemeData? theme;
   User owner;
-  NewBusinessForm({Key? key, this.theme, required this.owner})
-      : super(key: key);
+  NewRewardForm({Key? key, this.theme, required this.owner}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    return _NewBusinessFormState();
+    return _NewRewardFormState();
   }
 }
 
-class _NewBusinessFormState extends State<NewBusinessForm> {
+class _NewRewardFormState extends State<NewRewardForm> {
   ThemeData? _theme;
   User? _owner;
   TextEditingController _ctrlName = TextEditingController();
@@ -31,7 +30,7 @@ class _NewBusinessFormState extends State<NewBusinessForm> {
   TextEditingController _ctrlLogoUrl = TextEditingController();
   TextEditingController _ctrlIndustry = TextEditingController();
   TextEditingController _ctrlFiscalStatementUrl = TextEditingController();
-  _NewBusinessFormState();
+  _NewRewardFormState();
   @override
   void initState() {
     super.initState();
@@ -192,20 +191,6 @@ class _NewBusinessFormState extends State<NewBusinessForm> {
                       hoverColor: Color(colorHighlightDark),
                       label: Text("Tagline"),
                       hintText: "My business tagline"),
-                )),
-            Container(
-                margin: const EdgeInsetsDirectional.only(top: 5),
-                color: const Color(0x77000000),
-                child: TextField(
-                  key: const Key("Logo-URL"),
-                  controller: _ctrlLogoUrl,
-                  obscureText: false,
-                  decoration: const InputDecoration(
-                      fillColor: Colors.white54,
-                      hoverColor: Color(colorHighlightDark),
-                      label: Text("Logo URL"),
-                      hintText:
-                          "https://cdn.mybusiness.com/my-business-logo-path"),
                 )),
             Container(
                 margin: const EdgeInsetsDirectional.only(top: 5),

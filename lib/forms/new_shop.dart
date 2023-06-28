@@ -5,82 +5,85 @@ import 'package:flutter/material.dart';
 import 'package:flutter_trail/models/business.dart';
 import 'package:flutter_trail/themes/branding.dart';
 
+import '../models/shop.dart';
 import '../models/user.dart';
 
-class NewBusinessForm extends StatefulWidget {
+class NewShopForm extends StatefulWidget {
   ThemeData? theme;
-  User owner;
-  NewBusinessForm({Key? key, this.theme, required this.owner})
-      : super(key: key);
+  Business holder;
+  NewShopForm({Key? key, this.theme, required this.holder}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    return _NewBusinessFormState();
+    return _NewShopFormState();
   }
 }
 
-class _NewBusinessFormState extends State<NewBusinessForm> {
+class _NewShopFormState extends State<NewShopForm> {
   ThemeData? _theme;
-  User? _owner;
+  Business? _holder;
   TextEditingController _ctrlName = TextEditingController();
-  TextEditingController _ctrlBrand = TextEditingController();
-  TextEditingController _ctrlTaxId = TextEditingController();
-  TextEditingController _ctrlSlogan = TextEditingController();
-  TextEditingController _ctrlTagline = TextEditingController();
-  TextEditingController _ctrlOneliner = TextEditingController();
-  TextEditingController _ctrlLogoUrl = TextEditingController();
-  TextEditingController _ctrlIndustry = TextEditingController();
-  TextEditingController _ctrlFiscalStatementUrl = TextEditingController();
-  _NewBusinessFormState();
+  TextEditingController _ctrlDescription = TextEditingController();
+  TextEditingController _ctrlAddress = TextEditingController();
+  TextEditingController _ctrlNeighborhood = TextEditingController();
+  TextEditingController _ctrlTown = TextEditingController();
+  TextEditingController _ctrlProvince = TextEditingController();
+  TextEditingController _ctrlCountry = TextEditingController();
+  TextEditingController _ctrlZipcode = TextEditingController();
+  TextEditingController _ctrlPhotoUrl = TextEditingController();
+  TextEditingController _ctrlMapLink = TextEditingController();
+  _NewShopFormState();
   @override
   void initState() {
     super.initState();
     _theme = super.widget.theme ?? themeDark;
-    _owner = super.widget.owner;
+    _holder = super.widget.holder;
   }
 
   @override
   void dispose() {
     _ctrlName.dispose();
-    _ctrlBrand.dispose();
-    _ctrlTaxId.dispose();
-    _ctrlSlogan.dispose();
-    _ctrlTagline.dispose();
-    _ctrlOneliner.dispose();
-    _ctrlLogoUrl.dispose();
-    _ctrlIndustry.dispose();
-    _ctrlFiscalStatementUrl.dispose();
+    _ctrlDescription.dispose();
+    _ctrlAddress.dispose();
+    _ctrlNeighborhood.dispose();
+    _ctrlTown.dispose();
+    _ctrlProvince.dispose();
+    _ctrlCountry.dispose();
+    _ctrlZipcode.dispose();
+    _ctrlPhotoUrl.dispose();
+    _ctrlMapLink.dispose();
     super.dispose();
   }
 
   void create() async {
     String name = _ctrlName.text;
-    String brand = _ctrlBrand.text;
-    String taxId = _ctrlTaxId.text;
-    String slogan = _ctrlSlogan.text;
-    String tagline = _ctrlTagline.text;
-    String oneliner = _ctrlOneliner.text;
-    String logoUrl = _ctrlLogoUrl.text;
-    String industry = _ctrlIndustry.text;
-    String fiscalStatementUrl = _ctrlFiscalStatementUrl.text;
-    var businesses =
-        await Business.static().fetchAssets('test/businesses.json');
-    final id = businesses.length + 1;
-    Business business = Business(
+    String description = _ctrlDescription.text;
+    String address = _ctrlAddress.text;
+    String neighborhood = _ctrlNeighborhood.text;
+    String town = _ctrlTown.text;
+    String province = _ctrlProvince.text;
+    String country = _ctrlCountry.text;
+    String zipcode = _ctrlZipcode.text;
+    String photoURL = _ctrlPhotoUrl.text;
+    String mapLink = _ctrlMapLink.text;
+    var shops = await Shop.static().fetchAssets('test/shops.json');
+    final id = shops.length + 1;
+    Shop shop = Shop(
         id: id,
         name: name,
-        brand: brand,
-        taxID: taxId,
-        slogan: slogan,
-        tagLine: tagline,
-        oneLiner: oneliner,
-        logoURL: logoUrl,
-        industry: industry,
-        owner: _owner!);
-    File file = File('test/businesses.json');
-    businesses.add(business);
-    file.writeAsStringSync(
-        jsonEncode(businesses.map((e) => e.toJSON()).toList()));
+        description: description,
+        address: address,
+        neighborhood: neighborhood,
+        town: town,
+        province: province,
+        country: country,
+        zipcode: zipcode,
+        mapLink: mapLink,
+        photoURL: photoURL,
+        holder: _holder!);
+    File file = File('test/shops.json');
+    shops.add(shop);
+    file.writeAsStringSync(jsonEncode(shops.map((e) => e.toJSON()).toList()));
   }
 
   void linkBack(BuildContext context) {
@@ -91,7 +94,7 @@ class _NewBusinessFormState extends State<NewBusinessForm> {
   Widget build(BuildContext context) {
     var contTitle = Center(
       child: Text(
-        "Add business",
+        "Add shop",
         style: TextStyle(
             color: _theme!.colorScheme.primary,
             fontSize: 50,
@@ -114,7 +117,7 @@ class _NewBusinessFormState extends State<NewBusinessForm> {
       ),
     );
     var form = Form(
-        key: const Key("Add-business-form"),
+        key: const Key("Add-shop-form"),
         child: Column(
           children: [
             Container(
@@ -133,92 +136,105 @@ class _NewBusinessFormState extends State<NewBusinessForm> {
                 margin: const EdgeInsetsDirectional.only(top: 5),
                 color: const Color(0x77000000),
                 child: TextField(
-                  key: const Key("Brand"),
-                  controller: _ctrlBrand,
+                  key: const Key("Description"),
+                  controller: _ctrlDescription,
                   decoration: const InputDecoration(
                       fillColor: Colors.white54,
                       hoverColor: Color(colorHighlightDark),
-                      label: Text("Brand"),
-                      hintText: "My brand"),
+                      label: Text("Description"),
+                      hintText: "What makes my shop spetial"),
                 )),
             Container(
                 margin: const EdgeInsetsDirectional.only(top: 5),
                 color: const Color(0x77000000),
                 child: TextField(
-                  key: const Key("Tax-ID"),
-                  controller: _ctrlTaxId,
+                  key: const Key("Address"),
+                  controller: _ctrlAddress,
                   obscureText: false,
                   decoration: const InputDecoration(
                       fillColor: Colors.white54,
                       hoverColor: Color(colorHighlightDark),
-                      label: Text("Tax ID"),
-                      hintText: "MB#######"),
+                      label: Text("Address"),
+                      hintText: "#1 Trading Rd."),
                 )),
             Container(
                 margin: const EdgeInsetsDirectional.only(top: 5),
                 color: const Color(0x77000000),
                 child: TextField(
-                  key: const Key("Slogan"),
-                  controller: _ctrlSlogan,
+                  key: const Key("Neighborhood"),
+                  controller: _ctrlNeighborhood,
                   obscureText: false,
                   decoration: const InputDecoration(
                       fillColor: Colors.white54,
                       hoverColor: Color(colorHighlightDark),
-                      label: Text("Slogan"),
-                      hintText: "My business slogan"),
+                      label: Text("Neighborhood"),
+                      hintText: "Trading Bay"),
                 )),
             Container(
                 margin: const EdgeInsetsDirectional.only(top: 5),
                 color: const Color(0x77000000),
                 child: TextField(
-                  key: const Key("Oneliner"),
-                  controller: _ctrlOneliner,
+                  key: const Key("Town"),
+                  controller: _ctrlTown,
                   obscureText: false,
                   decoration: const InputDecoration(
                       fillColor: Colors.white54,
                       hoverColor: Color(colorHighlightDark),
-                      label: Text("Oneliner"),
-                      hintText: "My business oneliner"),
+                      label: Text("Town"),
+                      hintText: "Tradingburgh"),
                 )),
             Container(
                 margin: const EdgeInsetsDirectional.only(top: 5),
                 color: const Color(0x77000000),
                 child: TextField(
-                  key: const Key("Tagline"),
-                  controller: _ctrlTagline,
+                  key: const Key("Province"),
+                  controller: _ctrlProvince,
                   obscureText: false,
                   decoration: const InputDecoration(
                       fillColor: Colors.white54,
                       hoverColor: Color(colorHighlightDark),
-                      label: Text("Tagline"),
-                      hintText: "My business tagline"),
+                      label: Text("Province"),
+                      hintText: "Tradingham"),
                 )),
             Container(
                 margin: const EdgeInsetsDirectional.only(top: 5),
                 color: const Color(0x77000000),
                 child: TextField(
-                  key: const Key("Logo-URL"),
-                  controller: _ctrlLogoUrl,
+                  key: const Key("Zipcode"),
+                  controller: _ctrlZipcode,
                   obscureText: false,
                   decoration: const InputDecoration(
                       fillColor: Colors.white54,
                       hoverColor: Color(colorHighlightDark),
-                      label: Text("Logo URL"),
+                      label: Text("Zipcode"),
+                      hintText: "#####"),
+                )),
+            Container(
+                margin: const EdgeInsetsDirectional.only(top: 5),
+                color: const Color(0x77000000),
+                child: TextField(
+                  key: const Key("Map-link"),
+                  controller: _ctrlZipcode,
+                  obscureText: false,
+                  decoration: const InputDecoration(
+                      fillColor: Colors.white54,
+                      hoverColor: Color(colorHighlightDark),
+                      label: Text("Map link"),
+                      hintText: "https://mapservice.com/my-shop-location-url"),
+                )),
+            Container(
+                margin: const EdgeInsetsDirectional.only(top: 5),
+                color: const Color(0x77000000),
+                child: TextField(
+                  key: const Key("Photo-URL"),
+                  controller: _ctrlPhotoUrl,
+                  obscureText: false,
+                  decoration: const InputDecoration(
+                      fillColor: Colors.white54,
+                      hoverColor: Color(colorHighlightDark),
+                      label: Text("Photo URL"),
                       hintText:
-                          "https://cdn.mybusiness.com/my-business-logo-path"),
-                )),
-            Container(
-                margin: const EdgeInsetsDirectional.only(top: 5),
-                color: const Color(0x77000000),
-                child: TextField(
-                  key: const Key("Industry"),
-                  controller: _ctrlIndustry,
-                  obscureText: false,
-                  decoration: const InputDecoration(
-                      fillColor: Colors.white54,
-                      hoverColor: Color(colorHighlightDark),
-                      label: Text("Industry"),
-                      hintText: "My business industry"),
+                          "https://cdn.mybusiness.com/my-shop-photo-path"),
                 )),
             Container(
                 margin: const EdgeInsets.only(top: 10),
@@ -242,8 +258,8 @@ class _NewBusinessFormState extends State<NewBusinessForm> {
                           onPressed: () {
                             create();
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                content:
-                                    Text("Business ${_ctrlName.text} added")));
+                                content: Text(
+                                    "Shop ${_ctrlName.text} added to business ${_holder!.name}")));
                             linkBack(context);
                           },
                           child: Text(
