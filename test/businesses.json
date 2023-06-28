@@ -6,7 +6,8 @@
         "one-liner": "Digital platform to automate document processing",
         "slogan": "Imagine, Share, Learn, Expand",
         "industry": "Information Technologies",
-        "logo-url": "https://my.alvyss.com/api/v1/cloudron/avatar?2395601373707481"
+        "logo-url": "https://my.alvyss.com/api/v1/cloudron/avatar?2395601373707481",
+        "owner": {"id": 1, "username": "doe.john", "firstname": "John", "lastname": "Doe", "email": "john.doe@sample.com", "password": "dummypass", "mobile": "5550691", "is-confirmed": false, "role": 1}
     },
     {
         "id": 2,
@@ -15,7 +16,8 @@
         "tag-line": "Netflix for indies",
         "one-liner": "Digital platform for distributing indie films",
         "slogan": "Watch, feel, live",
-        "industry": "Entertainment"
+        "industry": "Entertainment",
+        "owner": {"id": 2, "username": "qew.jane", "firstname": "Jane", "lastname": "Qew", "email": "jane.qew@sample.com", "password": "dummypass", "mobile": "5550690", "is-confirmed": false, "role": 2}
     },
     {
         "id": 3,
@@ -24,7 +26,8 @@
         "tag-line": "E-learning for business",
         "one-liner": "E-learning deployment platform for enterprises",
         "slogan": "",
-        "industry": ""
+        "industry": "",
+        "owner": {"id": 1, "username": "doe.john", "firstname": "John", "lastname": "Doe", "email": "john.doe@sample.com", "password": "dummypass", "mobile": "5550691", "is-confirmed": false, "role": 1}
     },
     {
         "id": 4,
@@ -33,7 +36,8 @@
         "tag-line": "Smart assets",
         "one-liner": "Data-driven financial services",
         "slogan": "",
-        "industry": "Finance & management"
+        "industry": "Finance & management",
+        "owner": {"id": 1, "username": "doe.john", "firstname": "John", "lastname": "Doe", "email": "john.doe@sample.com", "password": "dummypass", "mobile": "5550691", "is-confirmed": false, "role": 1}
     },
     {
         "id": 5,
@@ -42,7 +46,8 @@
         "tag-line": "",
         "one-liner": "",
         "slogan": "",
-        "industry": ""
+        "industry": "",
+        "owner": {"id": 1, "username": "doe.john", "firstname": "John", "lastname": "Doe", "email": "john.doe@sample.com", "password": "dummypass", "mobile": "5550691", "is-confirmed": false, "role": 1}
     },
     {
         "id": 6,
@@ -51,7 +56,8 @@
         "tag-line": "Healing mind games",
         "one-liner": "Digital platform for applying mindfulness therapy through gaming",
         "slogan": "Know yourself, grow yourself",
-        "industry": "Mental health"
+        "industry": "Mental health",
+        "owner": {"id": 1, "username": "doe.john", "firstname": "John", "lastname": "Doe", "email": "john.doe@sample.com", "password": "dummypass", "mobile": "5550691", "is-confirmed": false, "role": 1}
     },
     {
         "id": 7,
@@ -60,7 +66,8 @@
         "tag-line": "",
         "one-liner": "",
         "slogan": "You create, we build",
-        "industry": "Science, Technology and Engineering"
+        "industry": "Science, Technology and Engineering",
+        "owner": {"id": 1, "username": "doe.john", "firstname": "John", "lastname": "Doe", "email": "john.doe@sample.com", "password": "dummypass", "mobile": "5550691", "is-confirmed": false, "role": 1}
     },
     {
         "id": 8,
@@ -69,6 +76,7 @@
         "tag-line": "Smart documents",
         "one-liner": "AI powered document assitant",
         "slogan": "More than writing",
-        "industry": "Science, Technology and Engineering"
+        "industry": "Science, Technology and Engineering",
+        "owner": {"id": 1, "username": "doe.john", "firstname": "John", "lastname": "Doe", "email": "john.doe@sample.com", "password": "dummypass", "mobile": "5550691", "is-confirmed": false, "role": 1}
     }
 ]

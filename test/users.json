@@ -1,4 +1,5 @@
 [
-    { "id": 1, "username": "doe.john", "firstname": "john", "lastname": "doe", "email": "john.doe@sample.com", "password": "dummypass", "mobile": "5550691", "is-confirmed": false},
-    { "id": 2, "username": "qew.jane", "firstname": "jane", "lastname": "qew", "email": "jane.qew@sample.com", "password": "dummypass", "mobile": "5550690", "is-confirmed": false}
+    {"id": 1, "username": "doe.john", "firstname": "John", "lastname": "Doe", "email": "john.doe@sample.com", "password": "dummypass", "mobile": "5550691", "is-confirmed": false, "role": 1},
+    {"id": 2, "username": "qew.jane", "firstname": "Jane", "lastname": "Qew", "email": "jane.qew@sample.com", "password": "dummypass", "mobile": "5550690", "is-confirmed": false, "role": 2},
+    {"id": 3, "username": "ene.jean", "firstname": "Jean", "lastname": "Ene", "email": "jean.ene@sample.com", "password": "dummypass", "mobile": "5550692", "is-confirmed": false, "role": 3}
 ]

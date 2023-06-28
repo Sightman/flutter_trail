@@ -28,23 +28,41 @@ class SessionManager {
     }
   }
 
-  void login(String username, String email, String password) async {
-    final jsonUsers = await User.static().fetchAssets('test/users.json');
-    final user = jsonUsers
-        .map((e) =>
-            e.username == username || e.email == email && e.password == password
-                ? User(
-                    id: e.id,
-                    firstname: e.firstname,
-                    lastname: e.lastname,
-                    username: e.username,
-                    email: e.email,
-                    password: e.password,
-                    businesses: e.businesses,
-                    mobile: e.mobile,
-                    isConfirmed: e.isConfirmed)
-                : null)
-        .firstOrNull;
-    File(_sessionPath).writeAsString(jsonEncode(user!.toJSON()));
+  Future<User> login(String username, String email, String password) async {
+    try {
+      final jsonUsers = await User.static().fetchAssets('test/users.json');
+      User? user;
+      for (User e in jsonUsers) {
+        if (e.username == username ||
+            e.email == email && e.password == password) {
+          user = User(
+              id: e.id,
+              firstname: e.firstname,
+              lastname: e.lastname,
+              username: e.username,
+              email: e.email,
+              password: e.password,
+              businesses: e.businesses,
+              mobile: e.mobile,
+              isConfirmed: e.isConfirmed,
+              role: e.role);
+          break;
+        }
+      }
+      File(_sessionPath).writeAsString(jsonEncode(user!.toJSON()));
+      return user;
+    } catch (e) {
+      throw e.toString();
+    }
+  }
+
+  Future<User> loggedUser() async {
+    try {
+      final jsonSession = await _getSessionData();
+      User user = User.fromJSON(jsonSession);
+      return user;
+    } catch (e) {
+      throw (e.toString());
+    }
   }
 }

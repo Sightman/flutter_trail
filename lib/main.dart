@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_trail/models/user.dart';
 import '/menus/bottom_nav_bar.dart';
 import '/screens/welcome.dart';
 import '/session_manager.dart';
@@ -26,18 +27,22 @@ void main() async {
   }
   host = dotenv.env['HOST']!;
   isLoggedin = await SessionManager().validateSession();
+  User? user = isLoggedin ? await SessionManager().loggedUser() : null;
   runApp(MyApp(
-    host: host,
-    theme: themeDark,
-    isLoggedin: isLoggedin,
-  ));
+      host: host, theme: themeDark, isLoggedin: isLoggedin, loggedUser: user));
 }
 
 class MyApp extends StatelessWidget {
   String? host;
   ThemeData? theme;
   bool isLoggedin;
-  MyApp({Key? key, this.host, this.theme, required this.isLoggedin})
+  User? loggedUser;
+  MyApp(
+      {Key? key,
+      this.host,
+      this.theme,
+      required this.isLoggedin,
+      this.loggedUser})
       : super(key: key);
 
   void switchScreen(BuildContext context, Widget screen) {
@@ -51,9 +56,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Trail',
       theme: theme,
-      home: isLoggedin
-          ? FlutterTrail(title: 'The trail I code')
-          : WelcomeScreen(onLogin: switchScreen),
+      home: !isLoggedin
+          ? WelcomeScreen(onLogin: switchScreen)
+          : FlutterTrail(
+              title: 'Hi, ${loggedUser!.firstname}!',
+              user: loggedUser!,
+            ),
     );
   }
 }

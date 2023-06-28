@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:flutter_trail/models/user.dart';
+
 import '/src/requestor.dart';
 
 class Business {
@@ -13,6 +15,7 @@ class Business {
   String? logoURL =
       'https://my.alvyss.com/api/v1/cloudron/avatar?2395601373707481';
   String? industry = "";
+  User? owner;
   Business(
       {required this.id,
       required this.name,
@@ -22,7 +25,8 @@ class Business {
       String? tagLine,
       String? oneLiner,
       String? logoURL,
-      String? industry});
+      String? industry,
+      required this.owner});
   Business._(
       {required this.id,
       required this.name,
@@ -32,7 +36,8 @@ class Business {
       this.tagLine = '',
       this.oneLiner = '',
       this.logoURL,
-      this.industry});
+      this.industry,
+      required this.owner});
   Business.__();
 
   factory Business.fromJSON(Map<String, dynamic> data) {
@@ -52,6 +57,7 @@ class Business {
     var logoURL = utf8.encode(data['logo-url'] as String? ??
         'https://my.alvyss.com/api/v1/cloudron/avatar?2395601373707481');
     var industry = utf8.encode(data['industry'] as String? ?? '');
+    var owner = User.fromJSON(data['owner']);
     return Business._(
         id: id,
         name: utf8.decode(name),
@@ -61,7 +67,8 @@ class Business {
         tagLine: utf8.decode(tagLine),
         oneLiner: utf8.decode(oneLiner),
         logoURL: utf8.decode(logoURL),
-        industry: utf8.decode(industry));
+        industry: utf8.decode(industry),
+        owner: owner);
   }
 
   Map<String, dynamic> toJSON() => {
@@ -73,7 +80,8 @@ class Business {
         "tag-line": tagLine,
         "one-liner": oneLiner,
         "logo-url": logoURL,
-        "industry": industry
+        "industry": industry,
+        "owner": owner!.toJSON()
       };
 
   List<Business> mapJSON(List<dynamic> json) {

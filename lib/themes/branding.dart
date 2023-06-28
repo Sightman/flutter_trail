@@ -37,7 +37,7 @@ ThemeData themeDark = ThemeData(
       onBackground: Color(colorForegroundDarkDefault),
       onPrimary: Colors.black,
       onSecondary: Colors.white70,
-      onError: Colors.redAccent,
+      onError: Colors.white,
       onSurface: Colors.blue),
   bottomNavigationBarTheme: const BottomNavigationBarThemeData(
       backgroundColor: Colors.white24,
@@ -75,7 +75,7 @@ ThemeData themeLight = ThemeData(
       onBackground: Color(colorForegroundLightDefault),
       onPrimary: Colors.black,
       onSecondary: Colors.white70,
-      onError: Colors.redAccent,
+      onError: Colors.white,
       onSurface: Colors.blue),
   bottomNavigationBarTheme: const BottomNavigationBarThemeData(
       backgroundColor: Colors.white24,

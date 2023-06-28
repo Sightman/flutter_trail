@@ -76,7 +76,6 @@ class _MarketScreenState extends State<MarketScreen> {
               ),
               hintText: "Search"),
         ));
-
     var contLstCardSlides = FutureBuilder(
         future: _jsonShops,
         builder: (context, snapshot) {

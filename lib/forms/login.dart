@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_trail/models/user.dart';
+import '../flutter_trail.dart';
 import '/forms/signup.dart';
 import '/session_manager.dart';
 
@@ -44,18 +46,24 @@ class _LoginState extends State<Login> {
     String username = _ctrlUsername.text;
     String email = _ctrlEmail.text;
     String password = _ctrlPassword.text;
-    SessionManager().login(username, email, password);
-    bool isValid = await SessionManager().validateSession();
-    if (!isValid && _onLogin != null) {
-      _onLogin!(
-          context,
-          HomeScreen(
-            title: "Welcome, $username!",
-          ));
-      dispose();
-    } else {
+    try {
+      User user = await SessionManager().login(username, email, password);
+      bool isValid = await SessionManager().validateSession();
+      if (!isValid && _onLogin != null) {
+        _onLogin!(
+            context,
+            FlutterTrail(
+              title: "Welcome, $username!",
+              user: user,
+            ));
+        dispose();
+      } else {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text("Invalid credentials")));
+      }
+    } catch (e) {
       ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("Invalid credentials")));
+          .showSnackBar(SnackBar(content: Text(e.toString())));
     }
   }
 

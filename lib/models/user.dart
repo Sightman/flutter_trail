@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:flutter_trail/models/business.dart';
+
 import '/src/requestor.dart';
 
 class User {
@@ -14,7 +16,7 @@ class User {
   String? photoURL =
       'https://cdn4.iconfinder.com/data/icons/glyphs/24/icons_user2-256.png';
   String mobile = '';
-  List<dynamic>? businesses = [];
+  List<Business>? businesses;
   bool? isConfirmed = false;
   User(
       {required this.id,
@@ -27,7 +29,7 @@ class User {
       required this.password,
       this.role,
       this.photoURL,
-      required this.businesses,
+      this.businesses,
       required this.mobile,
       this.isConfirmed});
   User._(
@@ -64,7 +66,8 @@ class User {
     var role = data['role'] as int? ?? 0;
     var photoURL = utf8.encode(data['photo-url'] as String? ??
         'https://cdn4.iconfinder.com/data/icons/glyphs/24/icons_user2-256.png');
-    var businesses = data['businesses'] as List<dynamic>? ?? [];
+    var businesses =
+        Business.static().mapJSON(data['businesses'] as List<dynamic>? ?? []);
     var mobile = utf8.encode(data['mobile'] as String);
     var isConfirmed = data['is-confirmed'] as bool? ?? false;
     return User._(
@@ -94,7 +97,7 @@ class User {
         "password": password,
         "role": role,
         "photo-url": photoURL,
-        "businesses": businesses,
+        "businesses": businesses!.map((e) => e.toJSON()).toList(),
         "mobile": mobile,
         "is-confirmed": isConfirmed
       };

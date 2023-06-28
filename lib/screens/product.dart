@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_trail/menus/persistent_banner.dart';
 import 'package:flutter_trail/themes/branding.dart';
 
@@ -26,6 +27,15 @@ class _ProductScreenState extends State<ProductScreen> {
     _switchScreen = super.widget.switchScreen;
   }
 
+  Future<void> linkExternal(String url) async {
+    if (await canLaunchUrl(Uri(path: url))) {
+      await launchUrl(Uri(path: url));
+    } else {
+      ScaffoldMessenger.maybeOf(context)!
+          .showSnackBar(SnackBar(content: Text("Can't launch $url")));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     TextStyle stlInfo =
@@ -45,15 +55,11 @@ class _ProductScreenState extends State<ProductScreen> {
     var colInfo = Column(
       children: [
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Text(
               _product!.name,
-              style: stlInfo,
-            ),
-            Text(
-              "\$${_product!.price} / ${_product!.volumeUnit}",
-              style: stlInfo,
+              style: const TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
             )
           ],
         ),
@@ -67,21 +73,53 @@ class _ProductScreenState extends State<ProductScreen> {
             Text(
               _product!.model!,
               style: stlInfo,
+            ),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text(
+              "Price:",
+              style: TextStyle(fontSize: 20),
+            ),
+            Text(
+              "\$${_product!.price} ${_product!.currency} / ${_product!.volumeUnit}",
+              style: const TextStyle(fontSize: 20),
             )
           ],
         ),
         Row(
-          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Reward: ${_product!.pointsRewarded} pt",
+              "Reward:",
               style: TextStyle(
-                  color: themeDark.primaryColor,
+                  color: themeDark.highlightColor,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w600),
+            ),
+            Text(
+              "${_product!.pointsRewarded} pt",
+              style: TextStyle(
+                  color: themeDark.highlightColor,
                   fontSize: 20,
                   fontWeight: FontWeight.w600),
             )
           ],
-        )
+        ),
+        TextButton.icon(
+            onPressed: () async {
+              await linkExternal(_product!.photoURL!);
+            },
+            icon: const Icon(
+              Icons.location_searching,
+              size: 25,
+            ),
+            label: const Text(
+              "Find station",
+              style: TextStyle(fontSize: 25),
+            ))
       ],
     );
     return Scaffold(
