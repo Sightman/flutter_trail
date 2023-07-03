@@ -6,7 +6,7 @@ import '../flutter_trail.dart';
 import '/forms/signup.dart';
 import '/session_manager.dart';
 
-import '../screens/home.dart';
+import '../screens/consumer_home.dart';
 import '../themes/branding.dart';
 
 class Login extends StatefulWidget {
@@ -67,10 +67,15 @@ class _LoginState extends State<Login> {
     }
   }
 
-  void _onSignup() {
-    Scaffold(
-      body: Signup(),
+  void _onSignup(BuildContext context) {
+    var signupScreen = Container(
+      alignment: Alignment.center,
+      child: Signup(),
     );
+    Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+            builder: ((context) => Scaffold(body: signupScreen))));
   }
 
   @override
@@ -155,7 +160,9 @@ class _LoginState extends State<Login> {
                         style: ButtonStyle(
                             backgroundColor: MaterialStateProperty.all(
                                 _theme!.highlightColor)),
-                        onPressed: _onSignup,
+                        onPressed: () {
+                          _onSignup(context);
+                        },
                         child: Text(
                           "Sign up",
                           style: TextStyle(

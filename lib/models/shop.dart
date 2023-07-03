@@ -103,7 +103,7 @@ class Shop {
       List<dynamic> json = await Requestor().arrayFromAssets(filename);
       return json.map((e) => Shop.fromJSON(e)).toList();
     } catch (e) {
-      return [];
+      throw e.toString();
     }
   }
 

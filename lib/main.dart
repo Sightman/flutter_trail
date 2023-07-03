@@ -9,7 +9,7 @@ import '/screens/welcome.dart';
 import '/session_manager.dart';
 import '/themes/branding.dart';
 import '/flutter_trail.dart';
-import '/screens/home.dart';
+import 'screens/consumer_home.dart';
 
 void main() async {
   String host;
@@ -56,7 +56,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Trail',
       theme: theme,
-      home: !isLoggedin
+      home: isLoggedin
           ? WelcomeScreen(onLogin: switchScreen)
           : FlutterTrail(
               title: 'Hi, ${loggedUser!.firstname}!',
@@ -98,7 +98,7 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
     _title = super.widget.title;
     _host = dotenv.env['HOST'];
-    _home = HomeScreen(title: _title);
+    _home = ConsumerHomeScreen(title: _title);
   }
 
   void _incrementCounter() {

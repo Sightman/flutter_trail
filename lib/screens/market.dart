@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_trail/cards/preview.dart';
 import 'package:flutter_trail/models/product.dart';
-import 'package:flutter_trail/screens/home.dart';
 import 'package:flutter_trail/screens/product.dart';
 import 'package:flutter_trail/src/requestor.dart';
 

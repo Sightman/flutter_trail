@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter_trail/forms/signup.dart';
 import '/forms/login.dart';
 import '/src/requestor.dart';
 import '/menus/persistent_banner.dart';
 import '../menus/bottom_nav_bar.dart';
 import '../themes/branding.dart';
-import 'home.dart';
+import 'consumer_home.dart';
 
 class WelcomeScreen extends StatefulWidget {
   String? title;
+  ThemeData? theme;
   Function? onLogin;
-  WelcomeScreen({super.key, this.title, this.onLogin});
+  WelcomeScreen({super.key, this.title, this.onLogin, this.theme});
 
   @override
   State<StatefulWidget> createState() {
@@ -20,6 +22,7 @@ class WelcomeScreen extends StatefulWidget {
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
   String? _title;
+  ThemeData? _theme;
   late Future<List<dynamic>> _jsonSlides;
   Function? _onLogin;
   _WelcomeScreenState();
@@ -27,6 +30,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   void initState() {
     super.initState();
     _title = super.widget.title;
+    _theme = super.widget.theme ?? themeDark;
     _jsonSlides = Requestor().arrayFromAssets('test/slides.json');
     if (super.widget.onLogin != null) {
       _onLogin = super.widget.onLogin;
@@ -89,7 +93,23 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       BottomNavigationBarItem(
           icon: Icon(Icons.qr_code_scanner), label: "QR Scanner"),
     ];
-    var contSignupForm = Login(onLogin: _onLogin);
+    var contLoginForm = Login(onLogin: _onLogin);
+    var contSignup = Container(
+        margin: const EdgeInsets.only(top: 10),
+        child: ElevatedButton(
+            style: ButtonStyle(
+                backgroundColor:
+                    MaterialStateProperty.all(_theme!.highlightColor)),
+            onPressed: () {
+              Navigator.pushReplacement(
+                  context, MaterialPageRoute(builder: (context) => Signup()));
+            },
+            child: Text(
+              "Sign up",
+              style: TextStyle(
+                  color: _theme!.colorScheme.onPrimary,
+                  fontWeight: FontWeight.bold),
+            )));
     return Scaffold(
       body: Stack(
         children: [
@@ -98,7 +118,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             leading: Image.network(imgLogoBrand),
             title: _title,
           ),
-          contSignupForm
+          contLoginForm,
         ],
       ),
       bottomNavigationBar: BottomNavBar(

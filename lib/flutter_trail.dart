@@ -3,7 +3,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_trail/forms/new_business.dart';
 import 'package:flutter_trail/menus/persistent_banner.dart';
 import 'package:flutter_trail/models/user.dart';
-import 'package:flutter_trail/screens/business.dart';
+import 'package:flutter_trail/screens/business_home.dart';
 import 'package:flutter_trail/screens/dashboard.dart';
 import 'package:flutter_trail/screens/market.dart';
 import 'package:flutter_trail/screens/more.dart';
@@ -11,7 +11,7 @@ import 'package:flutter_trail/screens/profile.dart';
 import 'package:flutter_trail/screens/wallet.dart';
 
 import 'menus/bottom_nav_bar.dart';
-import 'screens/home.dart';
+import 'screens/consumer_home.dart';
 import 'themes/branding.dart';
 
 class FlutterTrail extends StatefulWidget {
@@ -30,7 +30,7 @@ class _FlutterTrail extends State<FlutterTrail> {
   String? _title;
   String? _host;
   List<Widget> _lstWidgets = [];
-  int widgetIndex = 2;
+  int widgetIndex = 0;
   User? _user;
   _FlutterTrail();
 
@@ -42,17 +42,17 @@ class _FlutterTrail extends State<FlutterTrail> {
     _user = super.widget.user;
     _lstWidgets = _user!.role == 2
         ? [
+            ConsumerHomeScreen(),
             MarketScreen(
               collection: "stations",
               switchScreen: linkScreen,
             ),
             WalletScreen(),
-            HomeScreen(),
             ProfileScreen(),
             MoreScreen()
           ]
         : [
-            BusinessScreen(
+            BusinessHomeScreen(
               owner: _user,
               linkScreen: linkScreen,
             ),
@@ -218,11 +218,11 @@ class _FlutterTrail extends State<FlutterTrail> {
         break;
       case 2:
         navBarItems = [
+          const BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
           const BottomNavigationBarItem(
               icon: Icon(Icons.local_gas_station), label: "Charge"),
           const BottomNavigationBarItem(
               icon: Icon(Icons.wallet), label: "Wallet"),
-          const BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
           const BottomNavigationBarItem(
               icon: Icon(Icons.person), label: "Profile"),
           const BottomNavigationBarItem(icon: Icon(Icons.menu), label: "Menu")
@@ -265,7 +265,7 @@ class _FlutterTrail extends State<FlutterTrail> {
       body: _lstWidgets[widgetIndex],
       bottomNavigationBar: BottomNavBar(
         items: navBarItems,
-        selectedItem: 2,
+        selectedItem: 0,
         switchTab: switchTab,
       ),
       floatingActionButton:

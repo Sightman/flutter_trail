@@ -109,6 +109,7 @@ flutter:
     - test/slides.json
     - test/ads.json
     - test/stations.json
+    - test/shops.json
     - test/products.json
     - test/session.json
 fonts:

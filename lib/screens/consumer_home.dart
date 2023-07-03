@@ -17,17 +17,17 @@ import '/lists/review.dart';
 import '../models/review.dart';
 import '../src/requestor.dart';
 
-class HomeScreen extends StatefulWidget {
+class ConsumerHomeScreen extends StatefulWidget {
   String? title;
-  HomeScreen({Key? key, this.title}) : super(key: key);
+  ConsumerHomeScreen({Key? key, this.title}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    return _HomeScreenState();
+    return _ConsumerHomeScreenState();
   }
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _ConsumerHomeScreenState extends State<ConsumerHomeScreen> {
   String? _title;
   String? _host;
   String? _root;
@@ -35,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
   late Future<List<dynamic>> _jsonBusinesses;
   late Future<List<dynamic>> _jsonReviews;
   late Future<List<dynamic>> _jsonAds;
-  _HomeScreenState();
+  _ConsumerHomeScreenState();
 
   @override
   void initState() {

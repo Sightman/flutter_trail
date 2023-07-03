@@ -93,7 +93,7 @@ class Business {
       List<dynamic> json = await Requestor().arrayFromAssets(filename);
       return json.map((e) => Business.fromJSON(e)).toList();
     } catch (e) {
-      return [];
+      throw e.toString();
     }
   }
 

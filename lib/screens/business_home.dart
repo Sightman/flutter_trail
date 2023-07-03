@@ -12,18 +12,18 @@ import '../models/business.dart';
 import '../models/shop.dart';
 import '../themes/branding.dart';
 
-class BusinessScreen extends StatefulWidget {
+class BusinessHomeScreen extends StatefulWidget {
   User? owner;
   Function? linkScreen;
-  BusinessScreen({Key? key, this.owner, this.linkScreen}) : super(key: key);
+  BusinessHomeScreen({Key? key, this.owner, this.linkScreen}) : super(key: key);
 
   @override
-  State<BusinessScreen> createState() {
-    return _BusinessScreenState();
+  State<BusinessHomeScreen> createState() {
+    return _BusinessHomeScreenState();
   }
 }
 
-class _BusinessScreenState extends State<BusinessScreen> {
+class _BusinessHomeScreenState extends State<BusinessHomeScreen> {
   String _title = "";
   late Future<List<Business>> _jsonBusinesses;
   late Future<List<Shop>> _jsonShops;
@@ -63,20 +63,34 @@ class _BusinessScreenState extends State<BusinessScreen> {
                 children: slides
                     .map((slide) => Container(
                         margin: const EdgeInsets.symmetric(horizontal: 5),
-                        child: OutlinedButton(
+                        child: IconButton(
+                            iconSize: 155,
+                            tooltip: slide.brand,
                             onPressed: () {
                               _onSwap(slide.id);
                             },
-                            child: ImageCard(
-                                image: NetworkImage(slide.logoURL != null
-                                    ? slide.logoURL.toString() == ''
-                                        ? "https://unsplash.com/es/fotos/nEwLb1onsDo"
-                                        : slide.logoURL.toString()
-                                    : "https://imgur.com/8m1tosq")))))
+                            icon: Stack(children: [
+                              ImageCard(
+                                  image: NetworkImage(slide.logoURL != null
+                                      ? slide.logoURL.toString() == ''
+                                          ? "https://unsplash.com/es/fotos/nEwLb1onsDo"
+                                          : slide.logoURL.toString()
+                                      : "https://imgur.com/8m1tosq")),
+                              Container(
+                                alignment: Alignment.center,
+                                child: Text(
+                                  slide.brand!,
+                                  style: const TextStyle(
+                                      backgroundColor: Colors.black45,
+                                      fontSize: 15),
+                                ),
+                              )
+                            ]))))
                     .toList());
           } else if (snapshot.hasError) {
-            return const Center(
-              child: Text("Some data could't be retrieved"),
+            return Center(
+              child: Text(
+                  "Some data could't be retrieved because: ${snapshot.error}"),
             );
           } else {
             return const Center(
@@ -125,8 +139,9 @@ class _BusinessScreenState extends State<BusinessScreen> {
               ),
             );
           } else if (snapshot.hasError) {
-            return const Center(
-              child: Text("Some data couldn't be retrieved"),
+            return Center(
+              child: Text(
+                  "Some data couldn't be retrieved becasuse: ${snapshot.error}"),
             );
           } else {
             return const Center(
@@ -151,7 +166,6 @@ class _BusinessScreenState extends State<BusinessScreen> {
                 for (var shop in snapshot.data!) {
                   if (shop.holder!.id == _businessIndex) {
                     shops.add(shop);
-                    print(shop.name);
                   }
                 }
                 return HorizontalCardList(
@@ -165,8 +179,9 @@ class _BusinessScreenState extends State<BusinessScreen> {
                       .toList(),
                 );
               } else if (snapshot.hasError) {
-                return const Center(
-                  child: Text("Some data couldn't be retrieved"),
+                return Center(
+                  child: Text(
+                      "Some data couldn't be retrieved because: ${snapshot.error}"),
                 );
               } else {
                 return const Center(
@@ -176,8 +191,9 @@ class _BusinessScreenState extends State<BusinessScreen> {
             },
           );
         } else if (snapshot.hasError) {
-          return const Center(
-            child: Text("Some data couldn't be retrieved"),
+          return Center(
+            child: Text(
+                "Some data couldn't be retrieved because: ${snapshot.error}"),
           );
         } else {
           return const Center(
@@ -186,7 +202,7 @@ class _BusinessScreenState extends State<BusinessScreen> {
         }
       }),
     );
-    var column = Column(
+    var column = ListView(
       children: [contLstCardSlides, contInfo, contShops],
     );
     var floatingActionButton = FutureBuilder<List<Business>>(

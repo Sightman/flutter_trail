@@ -21,6 +21,7 @@ class NewShopForm extends StatefulWidget {
 
 class _NewShopFormState extends State<NewShopForm> {
   ThemeData? _theme;
+  bool _isAccepted = false;
   Business? _holder;
   TextEditingController _ctrlName = TextEditingController();
   TextEditingController _ctrlDescription = TextEditingController();
@@ -84,10 +85,11 @@ class _NewShopFormState extends State<NewShopForm> {
     File file = File('test/shops.json');
     shops.add(shop);
     file.writeAsStringSync(jsonEncode(shops.map((e) => e.toJSON()).toList()));
+    _isAccepted = true;
   }
 
   void linkBack(BuildContext context) {
-    Navigator.pop(context);
+    Navigator.pop(context, _isAccepted);
   }
 
   @override
